@@ -38,25 +38,27 @@ class Othello{
 	//private members
 	int currState[COLUMNS][ROWS];
 	int prevState[COLUMNS][ROWS];
-	bool display;
+	bool display;		//user can turn display OFF or ON
 	
 	//private functions
+	int numPieces(int state[COLUMNS][ROWS], int player);
 	int score(int state[COLUMNS][ROWS], int player); 
 	int value(int state[COLUMNS][ROWS], int player);		//only used in the AI version
 	int numMoves(int state[COLUMNS][ROWS], int player);
 	void print(int state[COLUMNS][ROWS]);
 	void print(int state[COLUMNS][ROWS], int player);		//when player argument is included, it also prints the possible moves
-	int undo[COLUMNS][ROWS]();
-	int redo[COLUMNS][ROWS]();
-	int move[COLUMNS][ROWS](int state[COLUMNS][ROWS], int column, int row, int player);		//returns a game state
+	int *undo();
+	int *redo();
+	int *move(int state[COLUMNS][ROWS], int column, int row, int player);		//returns a game state
 	
-	//move helper functions
+	
 	/*
 	These functions check an empty space's direction. It returns EMPTY if
 	no pieces will be flipped in that direction, BLACK if white pieces could
 	be flipped in that direction, or WHITE if black pieces could be flipped
 	in that direction.
 	*/
+	
 	int left(int state[COLUMNS][ROWS], int column, int row);
 	int leftUp(int state[COLUMNS][ROWS], int column, int row);
 	int up(int state[COLUMNS][ROWS], int column, int row);
@@ -65,12 +67,14 @@ class Othello{
 	int rightDown(int state[COLUMNS][ROWS], int column, int row);
 	int down(int state[COLUMNS][ROWS], int column, int row);
 	int leftDown(int state[COLUMNS][ROWS], int column, int row);
+	
 	/*
 	This function calls the above functions (checking all of the directions)
 	to determine if the spot should be EMPTY, BLACK, WHITE, POSSIBLE_BLACK_MOVE,
 	POSSIBLE_WHITE_MOVE, or POSSIBLE_BLACK_OR_WHITE_MOVE.
 	*/
-	int evalSpace(int state[COLUMNS][ROWS], int column, int row);	
+	
+	int evalSpace(int state[COLUMNS][ROWS], int column, int row);
 	
 public:
 	//constructor
@@ -80,3 +84,120 @@ public:
 	bool endGame(int state[COLUMNS][ROWS]);
 	bool parse(string input, int player);		//returns true only if it should be the next player's turn
 };
+
+/*******************************PRIVATE FUNCTIONS**************************/
+
+int Othello::numPieces(int state[COLUMNS][ROWS], int player){
+
+}
+
+int Othello::score(int state[COLUMNS][ROWS], int player){
+	if(player == WHITE){
+		return numPieces(state, WHITE) - numPieces(state, BLACK);
+	}
+	else if(player == BLACK){
+		return numPieces(state, BLACK) - numPieces(state, WHITE);
+	}
+	else{
+		error("score: Invalid player.");
+	}
+}
+
+int Othello::value(int state[COLUMNS][ROWS], int player){
+	//only used in the AI version
+}
+
+int Othello::numMoves(int state[COLUMNS][ROWS], int player){
+
+}
+
+void Othello::print(int state[COLUMNS][ROWS]){
+
+}
+
+//when player argument is included, it also prints the possible moves
+void Othello::print(int state[COLUMNS][ROWS], int player){
+
+}
+
+int *Othello::undo(){
+
+}
+
+int *Othello::redo(){
+
+}
+
+//returns a game state
+int *Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
+
+}
+
+/*************************HELPER FUNCTIONS**********************************/
+
+/*
+These functions check an empty space's direction. It returns EMPTY if
+no pieces will be flipped in that direction, BLACK if white pieces could
+be flipped in that direction, or WHITE if black pieces could be flipped
+in that direction.
+*/
+	
+int Othello::left(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::leftUp(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::up(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::rightUp(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::right(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::rightDown(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::down(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+int Othello::leftDown(int state[COLUMNS][ROWS], int column, int row){
+
+}
+	
+/*
+This function calls the above functions (checking all of the directions)
+to determine if the spot should be EMPTY, BLACK, WHITE, POSSIBLE_BLACK_MOVE,
+POSSIBLE_WHITE_MOVE, or POSSIBLE_BLACK_OR_WHITE_MOVE.
+*/
+	
+int Othello::evalSpace(int state[COLUMNS][ROWS], int column, int row){
+
+}
+
+
+/***************************CONSTRUCTOR*****************************/
+
+Othello::Othello(){
+
+}
+
+/*************************PUBLIC FUNCTIONS**************************/
+
+bool Othello::endGame(int state[COLUMNS][ROWS]){
+
+}
+
+//returns true only if it should be the next player's turn
+bool Othello::parse(string input, int player){
+
+}
