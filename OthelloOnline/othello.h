@@ -124,13 +124,85 @@ int Othello::numMoves(int state[COLUMNS][ROWS], int player){
 
 }
 
+//Displays the board in current state
 void Othello::print(int state[COLUMNS][ROWS]){
 
+	//We want to loop through the state arrays to check for pieces
+	//first print top row
+	cout << "  |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
+	
+	for(int i=0; i<=ROWS; i++){
+		cout << i + "|"; //start with row number (ex: 0| )
+		for(int j=0; j<=COLUMNS; j++){
+			char piece = ' ';
+			if(state[j][i] == BLACK){
+				piece = '@';
+			}
+			else if(state[j][i] == WHITE){
+				piece = 'O';
+			}
+			else
+				piece = ' ';
+			cout << "  " << piece << "  |";
+		}
+		cout << endl;
+	}
 }
 
 //when player argument is included, it also prints the possible moves
 void Othello::print(int state[COLUMNS][ROWS], int player){
-
+	//first row
+	cout << "  |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
+	if(player == BLACK){
+		for(int i=0; i<=ROWS; i++){
+		cout << i + "|";
+			for(int j=0; j<=COLUMNS; j++){
+				char piece = ' '; //default as a space (no pieces present)
+				if(state[j][i] == BLACK){
+					piece = '@';
+				}
+				else if(state[j][i] == WHITE){
+					piece = 'O';
+				}
+				else if(state[j][i] == POSSIBLE_BLACK_MOVE){//mark a square as a potential move
+					piece = 'X';
+				}
+				else if(state[j][i] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					piece = 'X';
+				}
+				else
+					piece = ' ';
+				cout << "  " << piece << "  |";
+			}
+		cout << endl;
+		}	
+	}
+	else if(player == WHITE){	
+		for(int i=0; i<=ROWS; i++){
+		cout << i + "|";
+			for(int j=0; j<=COLUMNS; j++){
+				char piece = ' ';
+				if(state[j][i] == BLACK){
+					piece = '@';
+				}
+				else if(state[j][i] == WHITE){
+					piece = 'O';
+				}
+				else if(state[j][i] == POSSIBLE_WHITE_MOVE){//mark a square as a potential move
+					piece = 'X';
+				}
+				else if(state[j][i] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					piece = 'X';
+				}
+				else
+					piece = ' ';
+				cout << "  " << piece << "  |";
+			}
+		cout << endl;
+		}
+	}
+	else 
+		error("print: invalid player passed");
 }
 
 int *Othello::undo(){
