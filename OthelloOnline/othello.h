@@ -20,7 +20,7 @@ Description: This is the Othello class. It consists of a state and
 #define WHITE 1
 #define POSSIBLE_BLACK_MOVE 2
 #define POSSIBLE_WHITE_MOVE 3
-#define POSSIBLE_BLACK_OR_WHITE_MOVE 4
+#define POSSIBLE_BLACK_OR_WHITE_MOVE 4	//this is for a space where black or white can move
 #define a 0
 #define b 1
 #define c 2
@@ -41,6 +41,7 @@ class Othello{
 	bool display;		//user can turn display OFF or ON
 	
 	//private functions
+	int opposingColor(int color);
 	int numPieces(int state[COLUMNS][ROWS], int player);
 	int score(int state[COLUMNS][ROWS], int player); 
 	int value(int state[COLUMNS][ROWS], int player);		//only used in the AI version
@@ -86,6 +87,18 @@ public:
 };
 
 /*******************************PRIVATE FUNCTIONS**************************/
+
+int Othello::opposingColor(int color){
+	if(color == WHITE){
+		return BLACK;
+	}
+	else if(color == BLACK){
+		return WHITE;
+	}
+	else{
+		error("opposingColor: Invalid color.");
+	}
+}
 
 int Othello::numPieces(int state[COLUMNS][ROWS], int player){
 
@@ -143,7 +156,21 @@ in that direction.
 */
 	
 int Othello::left(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(column > a){
+		currSpace = state[column][row];
+		nextSpace = state[column-1][row];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			column--;	//go to left column
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::leftUp(int state[COLUMNS][ROWS], int column, int row){
