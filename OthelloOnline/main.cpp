@@ -9,6 +9,10 @@ Description: This is the main file which takes in user input
 
 #include "othello.h"
 
+/****************************************************************/
+/*								MAIN						   	*/
+/****************************************************************/
+
 int main(){
 
 }
