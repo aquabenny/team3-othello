@@ -41,16 +41,17 @@ class Othello{
 	bool display;		//user can turn display OFF or ON
 	
 	//private functions
-	int opposingColor(int color);
-	int numPieces(int state[COLUMNS][ROWS], int player);
-	int score(int state[COLUMNS][ROWS], int player); 
+	int opposingPlayer(int player);		//returns the opposing player's color (BLACK or WHITE)
+	void copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]);		//copies state1 to state2
+	int numPieces(int state[COLUMNS][ROWS], int player);		//returns the number of pieces a player has on a given state
+	int score(int state[COLUMNS][ROWS], int player); 		//returns a player's score given a state
 	int value(int state[COLUMNS][ROWS], int player);		//only used in the AI version
-	int numMoves(int state[COLUMNS][ROWS], int player);
-	void print(int state[COLUMNS][ROWS]);
-	void print(int state[COLUMNS][ROWS], int player);		//when player argument is included, it also prints the possible moves
-	int *undo();
-	int *redo();
-	int *move(int state[COLUMNS][ROWS], int column, int row, int player);		//returns a game state
+	int numMoves(int state[COLUMNS][ROWS], int player);		//returns the number of possible moves a player can make
+	void print(int state[COLUMNS][ROWS]);		//prints the board
+	void print(int state[COLUMNS][ROWS], int player);		//prints the board with possible moves for the given player
+	int undo();		//updates currState and prevState by undoing last move
+	int redo();		//updates currState and prevState by redoing last move
+	int move(int state[COLUMNS][ROWS], int column, int row, int player);		//updates currState and prevState. Returns 0 if successful. Returns 1 if invalid move.
 	
 	
 	/*
@@ -82,28 +83,47 @@ public:
 	Othello();
 
 	//public functions
-	bool endGame(int state[COLUMNS][ROWS]);
-	bool parse(string input, int player);		//returns true only if it should be the next player's turn
+	bool endGame(int state[COLUMNS][ROWS]);		//checks if the game is over
+	
+/*
+This function takes in a player's command, move, or comment
+and handles it accordingly. It returns true if it should be
+the next player's turn.
+*/
+
+	bool parse(string input, int player);	
 };
 
 /*******************************PRIVATE FUNCTIONS**************************/
 
-int Othello::opposingColor(int color){
-	if(color == WHITE){
+//returns the opposing player's color (BLACK or WHITE)
+int Othello::opposingPlayer(int player){
+	if(player == WHITE){
 		return BLACK;
 	}
-	else if(color == BLACK){
+	else if(player == BLACK){
 		return WHITE;
 	}
 	else{
-		error("opposingColor: Invalid color.");
+		error("opposingPlayer: Invalid color.");
 	}
 }
 
+//copies state1 to state2
+void Othello::copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]){
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
+			state2[i][j] = state1[i][j];
+		}
+	}
+}
+
+//returns the number of pieces a player has on a given state
 int Othello::numPieces(int state[COLUMNS][ROWS], int player){
 
 }
 
+//returns a player's score given a state
 int Othello::score(int state[COLUMNS][ROWS], int player){
 	if(player == WHITE){
 		return numPieces(state, WHITE) - numPieces(state, BLACK);
@@ -116,10 +136,13 @@ int Othello::score(int state[COLUMNS][ROWS], int player){
 	}
 }
 
+//only used in the AI version
 int Othello::value(int state[COLUMNS][ROWS], int player){
-	//only used in the AI version
+	cout << "This function not supported in this version.\n";
+	return 0;
 }
 
+//returns the number of possible moves a player can make
 int Othello::numMoves(int state[COLUMNS][ROWS], int player){
 
 }
@@ -149,7 +172,7 @@ void Othello::print(int state[COLUMNS][ROWS]){
 	}
 }
 
-//when player argument is included, it also prints the possible moves
+//prints the board with possible moves
 void Othello::print(int state[COLUMNS][ROWS], int player){
 	//first row
 	cout << "  |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
@@ -205,17 +228,149 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 		error("print: invalid player passed");
 }
 
-int *Othello::undo(){
+//updates currState and prevState by undoing last move
+int Othello::undo(){
 
 }
 
-int *Othello::redo(){
+//updates currState and prevState by redoing last move
+int Othello::redo(){
 
 }
 
-//returns a game state
-int *Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
-
+//updates currState and prevState. Returns 0 if successful. Returns 1 if invalid move.
+int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
+	//check for valid player
+	if(player != WHITE && player != BLACK){
+		error("move: Invalid player.");
+	}
+	
+	//check column and row bounds
+	if(column >= COLUMNS || column < 0 ||  row >= ROWS || row < 0){
+		error("evalSpace: Column or row range error.");
+	}
+	
+	//check if valid move
+	if(player == WHITE){
+		if(state[column][row] != POSSIBLE_WHITE_MOVE
+			 && state[column][row] != POSSIBLE_BLACK_OR_WHITE_MOVE){
+			cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
+			return 1;
+		}
+	}
+	if(player == BLACK){
+		if(state[column][row] != POSSIBLE_BLACK_MOVE
+			 && state[column][row] != POSSIBLE_BLACK_OR_WHITE_MOVE){
+			cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
+			return 1;
+		}
+	}
+	
+	//check each direction and flip oposing pieces
+	int tempColumn;		//the next column to look at
+	int tempRow;		//the next row to look at
+	//left
+	if(player == left(state, column, row)){
+		tempColumn = column - 1;
+		tempRow = row;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			tempColumn--;
+			//tempRow does not change
+		}
+	}
+	
+	//left up
+	if(player == leftUp(state, column, row)){
+		tempColumn = column - 1;
+		tempRow = row + 1;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			tempColumn--;
+			tempRow--;
+		}
+	}
+	
+	//up
+	if(player == up(state, column, row)){
+		tempColumn = column;
+		tempRow = row + 1;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			//tempColumn does not change
+			tempRow--;
+		}
+	}
+	
+	//right up
+	if(player == rightUp(state, column, row)){
+		tempColumn = column + 1;
+		tempRow = row + 1;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			tempColumn++;
+			tempRow--;
+		}
+	}
+	
+	//right
+	if(player == right(state, column, row)){
+		tempColumn = column + 1;
+		tempRow = row;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			tempColumn++;
+			//tempRow does not change
+		}
+	}
+	
+	//right down
+	if(player == rightDown(state, column, row)){
+		tempColumn = column + 1;
+		tempRow = row - 1;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			tempColumn++;
+			tempRow++;
+		}
+	}
+	
+	//down
+	if(player == down(state, column, row)){
+		tempColumn = column;
+		tempRow = row - 1;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			//tempColumn does not change
+			tempRow++;
+		}
+	}
+	
+	//left down
+	if(player == leftDown(state, column, row)){
+		tempColumn = column - 1;
+		tempRow = row - 1;
+		while(state[tempColumn][tempRow] != player){
+			state[tempColumn][tempRow] = opposingPlayer(player);
+			tempColumn--;
+			tempRow++;
+		}
+	}
+	
+	/*
+	Now we need to re eavluate all of the pieces on the board
+	to determine if they have a piece, are a valid move for
+	each player, or is simply empty.
+	*/
+	
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
+			state[i][j] = evalSpace(state, i, j);
+		}
+	}
+	
+	//success
+	return 0;
 }
 
 /*************************HELPER FUNCTIONS**********************************/
@@ -226,7 +381,16 @@ no pieces will be flipped in that direction, BLACK if white pieces could
 be flipped in that direction, or WHITE if black pieces could be flipped
 in that direction.
 */
-	
+
+/*
+Each of these functions compares its next space with the current space
+while the next space is not off the board. If the next space is the
+opposite color of the current space, then it returns the next space.
+If the next space is not a black or white piece, then it returns EMPTY,
+meaning nothing would happen in that direction, regardless of which player
+made the move.
+*/
+
 int Othello::left(int state[COLUMNS][ROWS], int column, int row){
 	int nextSpace, currSpace;
 	while(column > a){
@@ -235,11 +399,11 @@ int Othello::left(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
-			column--;	//go to left column
+			column--;		//go to left column
 		}
 	}
 	return EMPTY;
@@ -280,23 +444,152 @@ POSSIBLE_WHITE_MOVE, or POSSIBLE_BLACK_OR_WHITE_MOVE.
 */
 	
 int Othello::evalSpace(int state[COLUMNS][ROWS], int column, int row){
-
+	//check column and row bounds
+	if(column >= COLUMNS || column < 0 ||  row >= ROWS || row < 0){
+		error("evalSpace: Column or row range error.");
+	}
+	
+	//check if there is already a piece in that spot
+	if(state[column][row] == WHITE){
+		return WHITE;
+	}
+	if(state[column][row] == BLACK){
+		return BLACK;
+	}
+	
+	//keep count of white and black move possibilities
+	int whiteCount = 0;
+	int blackCount = 0;
+	
+	//return code for direction
+	int rc = EMPTY;
+	
+	//check each direction for each color
+	//left
+	rc = left(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//left up
+	rc = leftUp(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//up
+	rc = up(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//right up
+	rc = rightUp(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//right
+	rc = right(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//right down
+	rc = rightDown(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//down
+	rc = down(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//left down
+	rc = leftDown(state, column, row);
+	if(rc == WHITE){
+		whiteCount++;
+	}
+	else if(rc == BLACK){
+		blackCount++;
+	}
+	
+	//return new space value
+	if(whiteCount > 0 && blackCount > 0){
+		return POSSIBLE_BLACK_OR_WHITE_MOVE;
+	}
+	else if(whiteCount > 0){
+		return POSSIBLE_WHITE_MOVE;
+	}
+	else if(blackCount > 0){
+		return POSSIBLE_BLACK_MOVE;
+	}
+	else{
+		return EMPTY;
+	}
 }
-
 
 /***************************CONSTRUCTOR*****************************/
 
 Othello::Othello(){
+	//set initial state
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
+			currState[i][j] = EMPTY;
+		}
+	}
+	currState[d][5] = BLACK;
+	currState[e][4] = BLACK;
+	currState[d][4] = WHITE;
+	currState[e][5] = WHITE;
 
+	//compute possible moves
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
+			currState[i][j] = evalSpace(currState, i, j);
+		}
+	}
+	
+	copyState(currState, prevState);
+	display = OFF;
 }
 
 /*************************PUBLIC FUNCTIONS**************************/
 
+//checks if the game is over
 bool Othello::endGame(int state[COLUMNS][ROWS]){
 
 }
 
-//returns true only if it should be the next player's turn
+/*
+This function takes in a player's command, move, or comment
+and handles it accordingly. It returns true if it should be
+the next player's turn.
+*/
+
 bool Othello::parse(string input, int player){
 
 }
