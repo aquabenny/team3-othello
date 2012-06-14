@@ -403,38 +403,140 @@ int Othello::left(int state[COLUMNS][ROWS], int column, int row){
 			return nextSpace;
 		}
 		else{
-			column--;		//go to left column
+			column--;	//go to left space
 		}
 	}
 	return EMPTY;
 }
 
 int Othello::leftUp(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(column > a && row > 0){
+		currSpace = state[column][row];
+		nextSpace = state[column-1][row-1];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			column--;	//go to left, upper space
+			row--;
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::up(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(row > 0){
+		currSpace = state[column][row];
+		nextSpace = state[column][row-1];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			row--;	//go to the space above
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::rightUp(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(column < h && row > 0){
+		currSpace = state[column][row];
+		nextSpace = state[column+1][row-1];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			column++;	//go to right, upper space
+			row--;
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::right(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(column < h){
+		currSpace = state[column][row];
+		nextSpace = state[column+1][row];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			column++;	//go to right space
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::rightDown(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(column < h && row < 7){
+		currSpace = state[column][row];
+		nextSpace = state[column+1][row+1];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			column++;	//go to right, lower space
+			row++;
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::down(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(row < 7){
+		currSpace = state[column][row];
+		nextSpace = state[column][row+1];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			row++;	//go to the space below
+		}
+	}
+	return EMPTY;
 }
 
 int Othello::leftDown(int state[COLUMNS][ROWS], int column, int row){
-
+	int nextSpace, currSpace;
+	while(column > a && row < 7){
+		currSpace = state[column][row];
+		nextSpace = state[column-1][row+1];
+		if(nextSpace != BLACK && nextSpace != WHITE){
+			return EMPTY;
+		}
+		else if(opposingColor(nextSpace) == currSpace){
+			return nextSpace;
+		}
+		else{
+			column--;	//go to left, lower space
+			row++;
+		}
+	}
+	return EMPTY;
 }
 	
 /*
