@@ -120,7 +120,30 @@ void Othello::copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]){
 
 //returns the number of pieces a player has on a given state
 int Othello::numPieces(int state[COLUMNS][ROWS], int player){
-
+	if(player == WHITE){
+		int whitePieces=0;
+		for(int i=0; i <= ROWS; i++){
+			for(int j=0; j <= COLUMNS; j++){
+				if(state[j][i] == WHITE){
+					whitePieces++;
+				}
+			}
+		}
+		return whitePieces;	
+	}
+	else if(player == BLACK){
+		int blackPieces=0;
+		for(int i=0; i <= ROWS; i++){
+			for(int j=0; j <= COLUMNS; j++){
+				if(state[j][i] == BLACK){
+					blackPieces++;
+				}
+			}
+		}
+		return blackPieces;
+	}
+	else
+		error("numPieces: Invalid color");
 }
 
 //returns a player's score given a state
@@ -230,12 +253,32 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 
 //updates currState and prevState by undoing last move
 int Othello::undo(){
-
+	if(prevState == currState){
+		cout << "redo: can't redo, previous move and current move are the same.\n";
+		return 1;
+	}
+	else{
+		int tempState[COLUMNS][ROWS];
+		copyState(prevState, tempState); //Copy previous state to temp
+		copyState(currState, prevState); //Copy current state to previous (allows for re-do)
+		copyState(tempState, currState); //lastly copy temp over to current state, undoing the move
+		return 0;
+	}
 }
 
 //updates currState and prevState by redoing last move
 int Othello::redo(){
-
+	if(prevState == currState){
+		cout << "redo: can't redo, previous move and current move are the same.\n";
+		return 1;
+	}
+	else{
+		int tempState[COLUMNS][ROWS];
+		copyState(prevState, tempState); //Copy previous state to temp
+		copyState(currState, prevState); //Copy current state to previous (allows for un-do)
+		copyState(tempState, currState); //lastly copy temp over to current state, redoing the move
+		return 0;
+	}
 }
 
 //updates currState and prevState. Returns 0 if successful. Returns 1 if invalid move.
@@ -683,7 +726,11 @@ Othello::Othello(){
 
 //checks if the game is over
 bool Othello::endGame(int state[COLUMNS][ROWS]){
-
+	if(numMoves(currState, WHITE) == 0 && numMoves(currState, BLACK) == 0){
+		return true;
+	}
+	else 
+		return false;
 }
 
 /*
