@@ -16,21 +16,25 @@ Description: This is the main file which takes in user input
 int main(){
 	Othello o;
 	string input;
+	int rc = 0;
 	cout << "Welcome to the best Othello game eva!\n"
-		 << "Enter a command.\n\n";
-	while(o.endGame() == false){
+		 << "Enter a command\n";
+		 
+	while(rc != 2){
 		//BLACKs turn
 		do{
-			cout << "BLACK>";
+			cout << "\nBLACK>";
 			getline(cin, input);
-		}while(!o.parse(input, BLACK));
+			rc = o.parse(input, BLACK);
+		}while(rc == 0);
 		
-		if(o.endGame() == false){
+		if(rc != 2){
 			//WHITEs turn
 			do{
-				cout << "WHITE>";
+				cout << "\nWHITE>";
 				getline(cin, input);
-			}while(!o.parse(input, WHITE));
+				rc = o.parse(input, WHITE);
+			}while(rc == 0);
 		}
 	}
 }

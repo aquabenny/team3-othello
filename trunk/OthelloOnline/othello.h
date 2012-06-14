@@ -42,7 +42,7 @@ class Othello{
 	
 	//private functions
 	int opposingPlayer(int player);		//returns the opposing player's color (BLACK or WHITE)
-	void copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]);		//copies state1 to state2
+	//void copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]);		//copies state1 to state2		//use memcpy instead
 	int numPieces(int state[COLUMNS][ROWS], int player);		//returns the number of pieces a player has on a given state
 	int score(int state[COLUMNS][ROWS], int player); 		//returns a player's score given a state
 	int value(int state[COLUMNS][ROWS], int player);		//only used in the AI version
@@ -54,7 +54,6 @@ class Othello{
 	int move(int state[COLUMNS][ROWS], int column, int row, int player);		//updates currState and prevState. Returns 0 if successful. Returns 1 if invalid move.
 	bool isColumn(char test);		//used to determine if char is a column
 	bool isRow(char test);		//used to determine if char is a row
-	
 	
 	/*
 	These functions check an empty space's direction. It returns EMPTY if
@@ -89,11 +88,12 @@ public:
 	
 /*
 This function takes in a player's command, move, or comment
-and handles it accordingly. It returns true if it should be
-the next player's turn.
+and handles it accordingly. It returns 1 if it should be
+the next player's turn, 0 if it should stay the same player's
+turn, and returns 2 if the game should end.
 */
 
-	bool parse(string input, int player);	
+	int parse(string input, int player);	
 };
 
 /*******************************PRIVATE FUNCTIONS**************************/
@@ -112,6 +112,8 @@ int Othello::opposingPlayer(int player){
 }
 
 //copies state1 to state2
+//use memcpy instead
+/*
 void Othello::copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]){
 	for(int i=0; i<COLUMNS; i++){
 		for(int j=0; j<ROWS; j++){
@@ -119,13 +121,14 @@ void Othello::copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]){
 		}
 	}
 }
+*/
 
 //returns the number of pieces a player has on a given state
 int Othello::numPieces(int state[COLUMNS][ROWS], int player){
 	if(player == WHITE){
 		int whitePieces=0;
-		for(int i=0; i <= ROWS; i++){
-			for(int j=0; j <= COLUMNS; j++){
+		for(int i=0; i < ROWS; i++){
+			for(int j=0; j < COLUMNS; j++){
 				if(state[j][i] == WHITE){
 					whitePieces++;
 				}
@@ -135,8 +138,8 @@ int Othello::numPieces(int state[COLUMNS][ROWS], int player){
 	}
 	else if(player == BLACK){
 		int blackPieces=0;
-		for(int i=0; i <= ROWS; i++){
-			for(int j=0; j <= COLUMNS; j++){
+		for(int i=0; i < ROWS; i++){
+			for(int j=0; j < COLUMNS; j++){
 				if(state[j][i] == BLACK){
 					blackPieces++;
 				}
@@ -170,15 +173,17 @@ int Othello::value(int state[COLUMNS][ROWS], int player){
 //returns the number of possible moves a player can make
 int Othello::numMoves(int state[COLUMNS][ROWS], int player){
 	int count = 0;
-	for(int i=0; i<=ROWS; i++){
-		for(int j=0; j<=COLUMNS; j++){
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
 			if(player == BLACK){
-				if(state[j][i] == (POSSIBLE_BLACK_MOVE || POSSIBLE_BLACK_OR_WHITE_MOVE))
+				if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 					count++;
+				}
 			}
 			if(player == WHITE){
-				if(state[j][i] == (POSSIBLE_WHITE_MOVE || POSSIBLE_BLACK_OR_WHITE_MOVE))
+				if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 					count++;
+				}
 			}
 		}
 	}
@@ -191,11 +196,11 @@ void Othello::print(int state[COLUMNS][ROWS]){
 	//We want to loop through the state arrays to check for pieces
 	//first print top row
 	cout << "\n";
-	cout << "  |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
+	cout << " |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
 	
-	for(int i=0; i<=ROWS; i++){
+	for(int i=0; i<ROWS; i++){
 		cout << i << "|"; //start with row number (ex: 0| )
-		for(int j=0; j<=COLUMNS; j++){
+		for(int j=0; j<COLUMNS; j++){
 			char piece = '_';
 			if(state[j][i] == BLACK){
 				piece = '@';
@@ -244,9 +249,9 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 	}
 	
 	else if(player == WHITE){	
-		for(int i=0; i<=ROWS; i++){
+		for(int i=0; i<ROWS; i++){
 		cout << i << "|";
-			for(int j=0; j<=COLUMNS; j++){
+			for(int j=0; j<COLUMNS; j++){
 				char piece = '_';
 				if(state[j][i] == BLACK){
 					piece = '@';
@@ -279,10 +284,14 @@ int Othello::undo(){
 		return 1;
 	}
 	else{
-		int tempState[COLUMNS][ROWS];
-		copyState(prevState, tempState); //Copy previous state to temp
-		copyState(currState, prevState); //Copy current state to previous (allows for re-do)
-		copyState(tempState, currState); //lastly copy temp over to current state, undoing the move
+		int temp;
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				temp = currState[i][j];
+				currState[i][j] = prevState[i][j];
+				prevState[i][j] = temp;
+			}
+		}
 		return 0;
 	}
 }
@@ -294,10 +303,14 @@ int Othello::redo(){
 		return 1;
 	}
 	else{
-		int tempState[COLUMNS][ROWS];
-		copyState(prevState, tempState); //Copy previous state to temp
-		copyState(currState, prevState); //Copy current state to previous (allows for un-do)
-		copyState(tempState, currState); //lastly copy temp over to current state, redoing the move
+		int temp;
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				temp = currState[i][j];
+				currState[i][j] = prevState[i][j];
+				prevState[i][j] = temp;
+			}
+		}
 		return 0;
 	}
 }
@@ -330,15 +343,19 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 		}
 	}
 	
+	//copy to previous state
+	memcpy(prevState, currState, sizeof(currState));
+	
 	//check each direction and flip oposing pieces
 	int tempColumn;		//the next column to look at
 	int tempRow;		//the next row to look at
 	//left
 	if(player == left(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column - 1;
 		tempRow = row;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			tempColumn--;
 			//tempRow does not change
 		}
@@ -346,10 +363,11 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//left up
 	if(player == leftUp(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column - 1;
-		tempRow = row + 1;
+		tempRow = row - 1;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			tempColumn--;
 			tempRow--;
 		}
@@ -357,10 +375,11 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//up
 	if(player == up(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column;
-		tempRow = row + 1;
+		tempRow = row - 1;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			//tempColumn does not change
 			tempRow--;
 		}
@@ -368,10 +387,11 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//right up
 	if(player == rightUp(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column + 1;
-		tempRow = row + 1;
+		tempRow = row - 1;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			tempColumn++;
 			tempRow--;
 		}
@@ -379,10 +399,11 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//right
 	if(player == right(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column + 1;
 		tempRow = row;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			tempColumn++;
 			//tempRow does not change
 		}
@@ -390,10 +411,11 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//right down
 	if(player == rightDown(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column + 1;
-		tempRow = row - 1;
+		tempRow = row + 1;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			tempColumn++;
 			tempRow++;
 		}
@@ -401,10 +423,11 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//down
 	if(player == down(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column;
-		tempRow = row - 1;
+		tempRow = row + 1;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			//tempColumn does not change
 			tempRow++;
 		}
@@ -412,14 +435,18 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//left down
 	if(player == leftDown(state, column, row)){
+		//state[column][row] = player;
 		tempColumn = column - 1;
-		tempRow = row - 1;
+		tempRow = row + 1;
 		while(state[tempColumn][tempRow] != player){
-			state[tempColumn][tempRow] = opposingPlayer(player);
+			state[tempColumn][tempRow] = player;
 			tempColumn--;
 			tempRow++;
 		}
 	}
+	
+	//change actual spot
+	state[column][row] = player;
 	
 	/*
 	Now we need to re eavluate all of the pieces on the board
@@ -439,7 +466,7 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 
 //used to determine if char is a column
 bool Othello::isColumn(char test){
-	if(int(test) >= 97 || int(test) <= 104){
+	if(int(test) >= 97 && int(test) <= 104){
 		return true;
 	}
 	else 
@@ -448,7 +475,7 @@ bool Othello::isColumn(char test){
 
 //used to determine if char is a row
 bool Othello::isRow(char test){
-	if(int(test) >= 48 || int(test) <= 57){
+	if(int(test) >= 48 && int(test) <= 57){
 		return true;
 	}
 	else
@@ -745,10 +772,10 @@ Othello::Othello(){
 			currState[i][j] = EMPTY;
 		}
 	}
-	currState[d][5] = BLACK;
-	currState[e][4] = BLACK;
-	currState[d][4] = WHITE;
-	currState[e][5] = WHITE;
+	currState[d][4] = BLACK;
+	currState[e][3] = BLACK;
+	currState[d][3] = WHITE;
+	currState[e][4] = WHITE;
 
 	//compute possible moves
 	for(int i=0; i<COLUMNS; i++){
@@ -757,8 +784,10 @@ Othello::Othello(){
 		}
 	}
 	
-	copyState(currState, prevState);
-	display = OFF;
+	memcpy(prevState, currState, sizeof(currState));
+	display = ON;
+	
+	print(currState);
 }
 
 /*************************PUBLIC FUNCTIONS**************************/
@@ -774,21 +803,22 @@ bool Othello::endGame(){
 
 /*
 This function takes in a player's command, move, or comment
-and handles it accordingly. It returns true if it should be
-the next player's turn.
+and handles it accordingly. It returns 1 if it should be
+the next player's turn, 0 if it should stay the same player's
+turn, and returns 2 if the game should end.
 */
 
-bool Othello::parse(string input, int player){
+int Othello::parse(string input, int player){
 	//empty input
 	if(input.size() == 0){
 		cout << "No input found.\n";
-		return false;
+		return 0;
 	}
 	
 	//comment
 	else if(input.at(0) == ';'){
 		cout << input << endl;
-		return false;
+		return 0;
 	}
 	
 	//exit needs fixing
@@ -798,74 +828,83 @@ bool Othello::parse(string input, int player){
 		string confirmation;
 		getline(cin, confirmation);
 		if(confirmation == "y"){
-			error("Exiting...");
+			return 2;
 		}
 		else{
-			return false;
+			return 0;
 		}
 	}
 	
 	//display on
 	else if(input == "DISPLAY_ON"){
 		display = ON;
-		return false;
+		print(currState);
+		return 0;
 	}
 	
 	//display off
 	else if(input == "DISPLAY_OFF"){
 		display = OFF;
-		return false;
+		return 0;
 	}
 	
 	//easy
 	else if(input == "EASY"){
 		cout << "Not supported in this version.\n";
-		return false;
+		return 0;
 	}
 	
 	//medium
 	else if(input == "MEDIUM"){
 		cout << "Not supported in this version.\n";
-		return false;
+		return 0;
 	}
 	
 	//hard
 	else if(input == "HARD"){
 		cout << "Not supported in this version.\n";
-		return false;
+		return 0;
 	}
 	
 	//black
 	else if(input == "BLACK"){
 		cout << "Not supported in this version.\n";
-		return false;
+		return 0;
 	}
 	
 	//white
 	else if(input == "WHITE"){
 		cout << "Not supported in this version.\n";
-		return false;
+		return 0;
 	}
 	
 	//undo
 	else if(input == "UNDO"){
-		if(undo()){
-			return false;
+		if(undo()){		//undo didn't work
+			return 0;
 		}
-		return true;
+		if(display){
+			print(currState);
+		}
+		return 1;
 	}
 	
 	//redo
 	else if(input == "REDO"){
-		if(redo()){
-			return false;
+		if(redo()){		//redo didn't work
+			return 0;
 		}
-		return true;
+		if(display){
+			print(currState);
+		}
+		return 1;
 	}
 	
 	//show next position
 	else if(input == "SHOW_NEXT_POS"){
+		cout << "numMoves: " << numMoves(currState, player) << endl;
 		print(currState, player);
+		return 0;
 	}
 	
 	//move
@@ -879,42 +918,51 @@ bool Othello::parse(string input, int player){
 					//valid move. check if game is over
 					if(endGame()){
 						if(score(currState, WHITE) == score(currState, BLACK)){	//tie
-							cout << "Tie game! Final scores\nBLACK: "
-								 << score(currState, BLACK) << "\nWHITE: "
-								 << score(currState, WHITE) << endl;
-							return true;
+							cout << "Tie game! Final scores\nBLACK pieces: "
+								 << numPieces(currState, BLACK) << "\nWHITE pieces: "
+								 << numPieces(currState, WHITE) << endl;
+							return 2;
 						}
 						else if(score(currState, WHITE) < score(currState, BLACK)){	//Black wins
-							cout << "BLACK wins! Final scores\nBLACK: "
-								 << score(currState, BLACK) << "\nWHITE: "
-								 << score(currState, WHITE) << endl;
-							return true;
+							cout << "BLACK wins! Final scores\nBLACK pieces: "
+								 << numPieces(currState, BLACK) << "\nWHITE pieces: "
+								 << numPieces(currState, WHITE) << "\nBLACK score: "
+								 << score(currState, BLACK) << endl;
+							return 2;
 						}
 						else if(score(currState, WHITE) > score(currState, BLACK)){	//White wins
-							cout << "White wins! Final scores\nBLACK: "
-								 << score(currState, BLACK) << "\nWHITE: "
+							cout << "White wins! Final scores\nBLACK pieces: "
+								 << numPieces(currState, BLACK) << "\nWHITE pieces: "
+								 << numPieces(currState, WHITE) << "\nWHITE score: "
 								 << score(currState, WHITE) << endl;
-							return true;
+							return 2;
 						}
 					}
 					else{		//game is not over. Check number of opponent moves
 						if(numMoves(currState, opposingPlayer(player)) == 0){
 							cout << "Opposing player has no move to make. Go again!\n";
-							return false;
+							if(display){
+								print(currState, opposingPlayer(player));		//print(currState);		change back after debugging
+							}
+							return 0;
 						}
 						else{
-							return true;
+							if(display){
+								print(currState, opposingPlayer(player));		//print(currState);		change back after debugging
+							}
+							return 1;
 						}
 					}
 				}
 			}
 		}
 		cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
-		return false;		//invalid move
+		return 0;		//invalid move
 	}
 	
+	//invalid command
 	else{
 		cout << "Invalid input.\n";
-		return false;
+		return 0;
 	}
 }
