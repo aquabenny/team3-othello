@@ -190,12 +190,13 @@ void Othello::print(int state[COLUMNS][ROWS]){
 
 	//We want to loop through the state arrays to check for pieces
 	//first print top row
+	cout << "\n";
 	cout << "  |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
 	
 	for(int i=0; i<=ROWS; i++){
-		cout << i + "|"; //start with row number (ex: 0| )
+		cout << i << "|"; //start with row number (ex: 0| )
 		for(int j=0; j<=COLUMNS; j++){
-			char piece = ' ';
+			char piece = '_';
 			if(state[j][i] == BLACK){
 				piece = '@';
 			}
@@ -203,22 +204,24 @@ void Othello::print(int state[COLUMNS][ROWS]){
 				piece = 'O';
 			}
 			else
-				piece = ' ';
-			cout << "  " << piece << "  |";
+				piece = '_';
+			cout << "__" << piece << "__|";
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 //prints the board with possible moves
 void Othello::print(int state[COLUMNS][ROWS], int player){
 	//first row
-	cout << "  |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
+	cout << "\n";
+	cout << " |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
 	if(player == BLACK){
-		for(int i=0; i<=ROWS; i++){
-		cout << i + "|";
-			for(int j=0; j<=COLUMNS; j++){
-				char piece = ' '; //default as a space (no pieces present)
+		for(int i=0; i<ROWS; i++){
+		cout << i << "|";
+			for(int j=0; j<COLUMNS; j++){
+				char piece = '_'; //default as a space (no pieces present)
 				if(state[j][i] == BLACK){
 					piece = '@';
 				}
@@ -232,17 +235,19 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 					piece = 'X';
 				}
 				else
-					piece = ' ';
-				cout << "  " << piece << "  |";
+					piece = '_';
+				cout << "__" << piece << "__|";
 			}
 		cout << endl;
-		}	
+		}
+		cout << endl;
 	}
+	
 	else if(player == WHITE){	
 		for(int i=0; i<=ROWS; i++){
-		cout << i + "|";
+		cout << i << "|";
 			for(int j=0; j<=COLUMNS; j++){
-				char piece = ' ';
+				char piece = '_';
 				if(state[j][i] == BLACK){
 					piece = '@';
 				}
@@ -256,11 +261,12 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 					piece = 'X';
 				}
 				else
-					piece = ' ';
-				cout << "  " << piece << "  |";
+					piece = '_';
+				cout << "__" << piece << "__|";
 			}
 		cout << endl;
 		}
+		cout << endl;
 	}
 	else 
 		error("print: invalid player passed");
