@@ -417,7 +417,7 @@ int Othello::leftUp(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
@@ -436,7 +436,7 @@ int Othello::up(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
@@ -454,7 +454,7 @@ int Othello::rightUp(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
@@ -473,7 +473,7 @@ int Othello::right(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
@@ -491,7 +491,7 @@ int Othello::rightDown(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
@@ -510,7 +510,7 @@ int Othello::down(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
@@ -528,7 +528,7 @@ int Othello::leftDown(int state[COLUMNS][ROWS], int column, int row){
 		if(nextSpace != BLACK && nextSpace != WHITE){
 			return EMPTY;
 		}
-		else if(opposingColor(nextSpace) == currSpace){
+		else if(opposingPlayer(nextSpace) == currSpace){
 			return nextSpace;
 		}
 		else{
