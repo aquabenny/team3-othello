@@ -83,7 +83,7 @@ public:
 	Othello();
 
 	//public functions
-	bool endGame(int state[COLUMNS][ROWS]);		//checks if the game is over
+	bool endGame();		//checks if the game is over
 	
 /*
 This function takes in a player's command, move, or comment
@@ -167,7 +167,20 @@ int Othello::value(int state[COLUMNS][ROWS], int player){
 
 //returns the number of possible moves a player can make
 int Othello::numMoves(int state[COLUMNS][ROWS], int player){
-
+	int count = 0;
+	for(int i=0; i<=ROWS; i++){
+		for(int j=0; j<=COLUMNS; j++){
+			if(player == BLACK){
+				if(state[j][i] == (POSSIBLE_BLACK_MOVE || POSSIBLE_BLACK_OR_WHITE_MOVE))
+					count++;
+			}
+			if(player == WHITE){
+				if(state[j][i] == (POSSIBLE_WHITE_MOVE || POSSIBLE_BLACK_OR_WHITE_MOVE))
+					count++;
+			}
+		}
+	}
+	return count;
 }
 
 //Displays the board in current state
@@ -725,7 +738,7 @@ Othello::Othello(){
 /*************************PUBLIC FUNCTIONS**************************/
 
 //checks if the game is over
-bool Othello::endGame(int state[COLUMNS][ROWS]){
+bool Othello::endGame(){
 	if(numMoves(currState, WHITE) == 0 && numMoves(currState, BLACK) == 0){
 		return true;
 	}
