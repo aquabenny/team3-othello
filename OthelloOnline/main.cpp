@@ -14,5 +14,17 @@ Description: This is the main file which takes in user input
 /****************************************************************/
 
 int main(){
-
+	Othello o;
+	string input;
+	while(!o.endGame()){
+		//BLACKs turn
+		do{
+			getline(cin, input);
+		}while(!o.parse(input, BLACK));
+		
+		//WHITEs turn
+		do{
+			getline(cin, input);
+		}while(!o.parse(input, WHITE));
+	}
 }
