@@ -38,22 +38,22 @@ class Othello{
 	//private members
 	int currState[COLUMNS][ROWS];
 	int prevState[COLUMNS][ROWS];
-	bool display;		//user can turn display OFF or ON
+	bool display;																//user can turn display OFF or ON
 	
 	//private functions
-	int opposingPlayer(int player);		//returns the opposing player's color (BLACK or WHITE)
+	int opposingPlayer(int player);												//returns the opposing player's color (BLACK or WHITE)
 	//void copyState(int state1[COLUMNS][ROWS], int state2[COLUMNS][ROWS]);		//copies state1 to state2		//use memcpy instead
-	int numPieces(int state[COLUMNS][ROWS], int player);		//returns the number of pieces a player has on a given state
-	int score(int state[COLUMNS][ROWS], int player); 		//returns a player's score given a state
-	int value(int state[COLUMNS][ROWS], int player);		//only used in the AI version
-	int numMoves(int state[COLUMNS][ROWS], int player);		//returns the number of possible moves a player can make
-	void print(int state[COLUMNS][ROWS]);		//prints the board
-	void print(int state[COLUMNS][ROWS], int player);		//prints the board with possible moves for the given player
-	int undo();		//updates currState and prevState by undoing last move
-	int redo();		//updates currState and prevState by redoing last move
+	int numPieces(int state[COLUMNS][ROWS], int player);						//returns the number of pieces a player has on a given state
+	int score(int state[COLUMNS][ROWS], int player); 							//returns a player's score given a state
+	int value(int state[COLUMNS][ROWS], int player);							//only used in the AI version
+	int numMoves(int state[COLUMNS][ROWS], int player);							//returns the number of possible moves a player can make
+	void print(int state[COLUMNS][ROWS]);										//prints the board
+	void print(int state[COLUMNS][ROWS], int player);							//prints the board with possible moves for the given player
+	int undo();																	//updates currState and prevState by undoing last move
+	int redo();																	//updates currState and prevState by redoing last move
 	int move(int state[COLUMNS][ROWS], int column, int row, int player);		//updates currState and prevState. Returns 0 if successful. Returns 1 if invalid move.
-	bool isColumn(char test);		//used to determine if char is a column
-	bool isRow(char test);		//used to determine if char is a row
+	bool isColumn(char test);													//used to determine if char is a column
+	bool isRow(char test);														//used to determine if char is a row
 	
 	/*
 	These functions check an empty space's direction. It returns EMPTY if
@@ -347,8 +347,8 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	memcpy(prevState, currState, sizeof(currState));
 	
 	//check each direction and flip oposing pieces
-	int tempColumn;		//the next column to look at
-	int tempRow;		//the next row to look at
+	int tempColumn;										//the next column to look at
+	int tempRow;										//the next row to look at
 	//left
 	if(player == left(state, column, row)){
 		//state[column][row] = player;
@@ -909,28 +909,28 @@ int Othello::parse(string input, int player){
 	
 	//move
 	else if(input.size() == 2){
-		if(isColumn(input.at(0))){		//valid column
-			if(isRow(input.at(1))){		//valid row
+		if(isColumn(input.at(0))){														//valid column
+			if(isRow(input.at(1))){														//valid row
 				//convert column and row to ints
-				int tempColumn = (int)(input.at(0)) - 97;		//ascii conversion
-				int tempRow = (int)(input.at(1)) - 48;		//ascii conversion
+				int tempColumn = (int)(input.at(0)) - 97;								//ascii conversion
+				int tempRow = (int)(input.at(1)) - 48;									//ascii conversion
 				if(!move(currState, tempColumn, tempRow, player)){
 					//valid move. check if game is over
 					if(endGame()){
-						if(score(currState, WHITE) == score(currState, BLACK)){	//tie
+						if(score(currState, WHITE) == score(currState, BLACK)){			//tie
 							cout << "Tie game! Final scores\nBLACK pieces: "
 								 << numPieces(currState, BLACK) << "\nWHITE pieces: "
 								 << numPieces(currState, WHITE) << endl;
 							return 2;
 						}
-						else if(score(currState, WHITE) < score(currState, BLACK)){	//Black wins
+						else if(score(currState, WHITE) < score(currState, BLACK)){		//Black wins
 							cout << "BLACK wins! Final scores\nBLACK pieces: "
 								 << numPieces(currState, BLACK) << "\nWHITE pieces: "
 								 << numPieces(currState, WHITE) << "\nBLACK score: "
 								 << score(currState, BLACK) << endl;
 							return 2;
 						}
-						else if(score(currState, WHITE) > score(currState, BLACK)){	//White wins
+						else if(score(currState, WHITE) > score(currState, BLACK)){		//White wins
 							cout << "White wins! Final scores\nBLACK pieces: "
 								 << numPieces(currState, BLACK) << "\nWHITE pieces: "
 								 << numPieces(currState, WHITE) << "\nWHITE score: "
@@ -938,17 +938,17 @@ int Othello::parse(string input, int player){
 							return 2;
 						}
 					}
-					else{		//game is not over. Check number of opponent moves
+					else{																//game is not over. Check number of opponent moves
 						if(numMoves(currState, opposingPlayer(player)) == 0){
 							cout << "Opposing player has no move to make. Go again!\n";
 							if(display){
-								print(currState, opposingPlayer(player));		//print(currState);		change back after debugging
+								print(currState, opposingPlayer(player));				//print(currState);		change back after debugging
 							}
 							return 0;
 						}
 						else{
 							if(display){
-								print(currState, opposingPlayer(player));		//print(currState);		change back after debugging
+								print(currState, opposingPlayer(player));				//print(currState);		change back after debugging
 							}
 							return 1;
 						}
@@ -957,7 +957,7 @@ int Othello::parse(string input, int player){
 			}
 		}
 		cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
-		return 0;		//invalid move
+		return 0;																		//invalid move
 	}
 	
 	//invalid command
