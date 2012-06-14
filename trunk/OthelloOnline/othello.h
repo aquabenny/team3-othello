@@ -1,7 +1,7 @@
 /*
 File: othello.h
 Project: CSCE315 Project 2
-Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Ten Eyck
+Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Eyck
 Description: This is the Othello class. It consists of a state and
 			 takes an input string to execute on using the parse()
 			 function.
@@ -52,6 +52,8 @@ class Othello{
 	int undo();		//updates currState and prevState by undoing last move
 	int redo();		//updates currState and prevState by redoing last move
 	int move(int state[COLUMNS][ROWS], int column, int row, int player);		//updates currState and prevState. Returns 0 if successful. Returns 1 if invalid move.
+	bool isColumn(char test);		//used to determine if char is a column
+	bool isRow(char test);		//used to determine if char is a row
 	
 	
 	/*
@@ -77,9 +79,6 @@ class Othello{
 	*/
 	
 	int evalSpace(int state[COLUMNS][ROWS], int column, int row);
-	
-	bool isColumn(char test);
-	bool isRow(char test);
 	
 public:
 	//constructor
@@ -270,7 +269,7 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 //updates currState and prevState by undoing last move
 int Othello::undo(){
 	if(prevState == currState){
-		cout << "undo: can't undo, previous move and current move are the same.\n";
+		cout << "redo: can't redo, previous move and current move are the same.\n";
 		return 1;
 	}
 	else{
@@ -313,14 +312,14 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	if(player == WHITE){
 		if(state[column][row] != POSSIBLE_WHITE_MOVE
 			 && state[column][row] != POSSIBLE_BLACK_OR_WHITE_MOVE){
-			cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
+			//cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
 			return 1;
 		}
 	}
 	if(player == BLACK){
 		if(state[column][row] != POSSIBLE_BLACK_MOVE
 			 && state[column][row] != POSSIBLE_BLACK_OR_WHITE_MOVE){
-			cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
+			//cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
 			return 1;
 		}
 	}
@@ -430,6 +429,24 @@ int Othello::move(int state[COLUMNS][ROWS], int column, int row, int player){
 	
 	//success
 	return 0;
+}
+
+//used to determine if char is a column
+bool Othello::isColumn(char test){
+	if(int(test) >= 97 || int(test) <= 104){
+		return true;
+	}
+	else 
+		return false;
+}
+
+//used to determine if char is a row
+bool Othello::isRow(char test){
+	if(int(test) >= 48 || int(test) <= 57){
+		return true;
+	}
+	else
+		return false;
 }
 
 /*************************HELPER FUNCTIONS**********************************/
@@ -713,22 +730,6 @@ int Othello::evalSpace(int state[COLUMNS][ROWS], int column, int row){
 	}
 }
 
-bool isColumn(char test){
-	if(int(test) >= 97 || int(test) <= 104){
-		return true;
-	}
-	else 
-		return false;
-}
-
-bool isRow(char test){
-	if(int(test) >= 48 || int(test) <= 57){
-		return true;
-	}
-	else
-		return false;
-}
-
 /***************************CONSTRUCTOR*****************************/
 
 Othello::Othello(){
@@ -772,5 +773,142 @@ the next player's turn.
 */
 
 bool Othello::parse(string input, int player){
-
+	//empty input
+	if(input.size() == 0){
+		cout << "No input found.\n";
+		return false;
+	}
+	
+	//comment
+	else if(input.at(0) == ';'){
+		cout << input << endl;
+		return false;
+	}
+	
+	//exit needs fixing
+	else if(input == "EXIT"){
+		cout << "Are you sure you want to exit?\n"
+			 << "Game data will be lost! <y/n>\n>";
+		string confirmation;
+		getline(cin, confirmation);
+		if(confirmation == "y"){
+			error("Exiting...");
+		}
+		else{
+			return false;
+		}
+	}
+	
+	//display on
+	else if(input == "DISPLAY_ON"){
+		display = ON;
+		return false;
+	}
+	
+	//display off
+	else if(input == "DISPLAY_OFF"){
+		display = OFF;
+		return false;
+	}
+	
+	//easy
+	else if(input == "EASY"){
+		cout << "Not supported in this version.\n";
+		return false;
+	}
+	
+	//medium
+	else if(input == "MEDIUM"){
+		cout << "Not supported in this version.\n";
+		return false;
+	}
+	
+	//hard
+	else if(input == "HARD"){
+		cout << "Not supported in this version.\n";
+		return false;
+	}
+	
+	//black
+	else if(input == "BLACK"){
+		cout << "Not supported in this version.\n";
+		return false;
+	}
+	
+	//white
+	else if(input == "WHITE"){
+		cout << "Not supported in this version.\n";
+		return false;
+	}
+	
+	//undo
+	else if(input == "UNDO"){
+		if(undo()){
+			return false;
+		}
+		return true;
+	}
+	
+	//redo
+	else if(input == "REDO"){
+		if(redo()){
+			return false;
+		}
+		return true;
+	}
+	
+	//show next position
+	else if(input == "SHOW_NEXT_POS"){
+		print(currState, player);
+	}
+	
+	//move
+	else if(input.size() == 2){
+		if(isColumn(input.at(0))){		//valid column
+			if(isRow(input.at(1))){		//valid row
+				//convert column and row to ints
+				int tempColumn = (int)(input.at(0)) - 97;		//ascii conversion
+				int tempRow = (int)(input.at(1)) - 48;		//ascii conversion
+				if(!move(currState, tempColumn, tempRow, player)){
+					//valid move. check if game is over
+					if(endGame()){
+						if(score(currState, WHITE) == score(currState, BLACK)){	//tie
+							cout << "Tie game! Final scores\nBLACK: "
+								 << score(currState, BLACK) << "\nWHITE: "
+								 << score(currState, WHITE) << endl;
+							return true;
+						}
+						else if(score(currState, WHITE) < score(currState, BLACK)){	//Black wins
+							cout << "BLACK wins! Final scores\nBLACK: "
+								 << score(currState, BLACK) << "\nWHITE: "
+								 << score(currState, WHITE) << endl;
+							return true;
+						}
+						else if(score(currState, WHITE) > score(currState, BLACK)){	//White wins
+							cout << "White wins! Final scores\nBLACK: "
+								 << score(currState, BLACK) << "\nWHITE: "
+								 << score(currState, WHITE) << endl;
+							return true;
+						}
+					}
+					else{		//game is not over. Check number of opponent moves
+						if(numMoves(currState, opposingPlayer(player)) == 0){
+							cout << "Opposing player has no move to make. Go again!\n";
+							return false;
+						}
+						else{
+							return true;
+						}
+					}
+				}
+			}
+		}
+		cout << "Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n";
+		return false;		//invalid move
+	}
+	
+	else{
+		cout << "Invalid input.\n";
+		return false;
+	}
 }
