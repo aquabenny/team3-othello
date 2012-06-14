@@ -1,7 +1,7 @@
 /*
 File: othello.h
 Project: CSCE315 Project 2
-Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Eyck
+Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Ten Eyck
 Description: This is the Othello class. It consists of a state and
 			 takes an input string to execute on using the parse()
 			 function.
@@ -77,6 +77,9 @@ class Othello{
 	*/
 	
 	int evalSpace(int state[COLUMNS][ROWS], int column, int row);
+	
+	bool isColumn(char test);
+	bool isRow(char test);
 	
 public:
 	//constructor
@@ -267,7 +270,7 @@ void Othello::print(int state[COLUMNS][ROWS], int player){
 //updates currState and prevState by undoing last move
 int Othello::undo(){
 	if(prevState == currState){
-		cout << "redo: can't redo, previous move and current move are the same.\n";
+		cout << "undo: can't undo, previous move and current move are the same.\n";
 		return 1;
 	}
 	else{
@@ -708,6 +711,22 @@ int Othello::evalSpace(int state[COLUMNS][ROWS], int column, int row){
 	else{
 		return EMPTY;
 	}
+}
+
+bool isColumn(char test){
+	if(int(test) >= 97 || int(test) <= 104){
+		return true;
+	}
+	else 
+		return false;
+}
+
+bool isRow(char test){
+	if(int(test) >= 48 || int(test) <= 57){
+		return true;
+	}
+	else
+		return false;
 }
 
 /***************************CONSTRUCTOR*****************************/
