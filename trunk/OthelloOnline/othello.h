@@ -201,7 +201,7 @@ void Othello::print(char state[COLUMNS][ROWS]){
 	cout << " |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
 	
 	for(int i=0; i<ROWS; i++){
-		cout << i << "|"; //start with row number (ex: 0| )
+		cout << i+1 << "|"; //start with row number (ex: 0| )
 		for(int j=0; j<COLUMNS; j++){
 			char piece = '_';
 			if(state[j][i] == BLACK){
@@ -226,7 +226,7 @@ void Othello::print(char state[COLUMNS][ROWS], char player){
 	cout << " |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
 	if(player == BLACK){
 		for(int i=0; i<ROWS; i++){
-		cout << i << "|";
+		cout << i+1 << "|";
 			for(int j=0; j<COLUMNS; j++){
 				char piece = '_'; //default as a space (no pieces present)
 				if(state[j][i] == BLACK){
@@ -252,7 +252,7 @@ void Othello::print(char state[COLUMNS][ROWS], char player){
 	
 	else if(player == WHITE){	
 		for(int i=0; i<ROWS; i++){
-		cout << i << "|";
+		cout << i+1 << "|";
 			for(int j=0; j<COLUMNS; j++){
 				char piece = '_';
 				if(state[j][i] == BLACK){
@@ -466,7 +466,7 @@ bool Othello::isColumn(char test){
 
 //used to determine if char is a row
 bool Othello::isRow(char test){
-	if(int(test) >= 48 && int(test) <= 57){
+	if(int(test) >= 49 && int(test) <= 56){
 		return true;
 	}
 	else
@@ -911,7 +911,7 @@ int Othello::parse(string input, char player){
 				//convert column and row to ints
 				int tempColumn = (int)(input.at(0)) - 97;								//ascii conversion
 				int tempRow = (int)(input.at(1)) - 48;									//ascii conversion
-				if(!move(tempColumn, tempRow, player)){
+				if(!move(tempColumn, tempRow-1, player)){
 					//valid move. check if game is over
 					if(endGame()){
 						if(score(states[currState], WHITE) == score(states[currState], BLACK)){			//tie
