@@ -90,6 +90,8 @@ public:
 
 	//public functions
 	bool endGame();		//checks if the game is over
+	int getNumMoves(char player);		//returns the number of moves corresponding to the current state
+	void copyCurrState(char state[COLUMNS][ROWS]);
 	
 /*
 This function takes in a player's command, move, or comment
@@ -968,4 +970,12 @@ int Othello::parse(string input, char player){
 		cout << "Invalid input.\n";
 		return 0;
 	}
+}
+
+int Othello::getNumMoves(char player){
+	return numMoves(states[currState], player);
+}
+
+void Othello::copyCurrState(char state[COLUMNS][ROWS]){
+	memcpy(state, states[currState], sizeof(states[currState]));
 }
