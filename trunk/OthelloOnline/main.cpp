@@ -7,7 +7,7 @@ Description: This is the main file which takes in user input
 			 is to test the game mechanics.
 */
 
-#include "othello.h"
+#include "ai.h"
 
 /****************************************************************/
 /*								MAIN						   	*/
