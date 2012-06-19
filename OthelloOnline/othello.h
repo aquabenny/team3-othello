@@ -852,31 +852,31 @@ int Othello::parse(string input, char player){
 	
 	//easy
 	else if(input == "EASY"){
-		cout << "Not supported in this version.\n";
+		cout << "Cannot change difficulty once game has started.\n";
 		return 0;
 	}
 	
 	//medium
 	else if(input == "MEDIUM"){
-		cout << "Not supported in this version.\n";
+		cout << "Cannot change difficulty once game has started.\n";
 		return 0;
 	}
 	
 	//hard
 	else if(input == "HARD"){
-		cout << "Not supported in this version.\n";
+		cout << "Cannot change difficulty once game has started.\n";
 		return 0;
 	}
 	
 	//black
 	else if(input == "BLACK"){
-		cout << "Not supported in this version.\n";
+		cout << "Cannot change color once game has started.\n";
 		return 0;
 	}
 	
 	//white
 	else if(input == "WHITE"){
-		cout << "Not supported in this version.\n";
+		cout << "Cannot change color once game has started.\n";
 		return 0;
 	}
 	
