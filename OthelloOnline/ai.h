@@ -1,7 +1,7 @@
 /*
 File: ai.h
 Project: CSCE315 Project 2
-Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Eyck
+Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Ten Eyck
 Description: This is the AI class. It can take in a state and
 				output a string for its next move.
 */

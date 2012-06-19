@@ -1,7 +1,7 @@
 /*
 File: othello.h
 Project: CSCE315 Project 2
-Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Eyck
+Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Ten Eyck
 Description: This is the Othello class. It consists of a state and
 			 takes an input string to execute on using the parse()
 			 function.
