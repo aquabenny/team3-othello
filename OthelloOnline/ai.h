@@ -25,6 +25,7 @@ class AI{
 	int testMove(int column, int row, char player);
 	char opposingPlayer(char player);
 	int numMoves(vector< vector<char> > state, char player);
+	void print(vector< vector<char> > state, char player);
 	
 	//helper functions for testMove
 	char evalSpace(vector< vector<char> >, int column, int row);
@@ -136,8 +137,25 @@ string AI::go(Othello &o){
 		return temp.bestMove;	
 	}
 	else if(difficulty == HARD){
-		//not supported yet
-		error("YOU BROKE IT!!!\n");
+		//put currstate on the stack alone
+		char tempState[COLUMNS][ROWS];
+		o.copyCurrState(tempState);
+		vector<char> rows;
+		vector< vector<char> > columns; 
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				rows.push_back(tempState[i][j]);
+			}
+			columns.push_back(rows);
+			rows.clear();
+		}
+		states.push(columns);
+		
+		//mightymax
+		Best temp = minmax(4);
+		cout << temp.bestMove << endl;
+		//cout << temp.bestVal << endl;
+		return temp.bestMove;	
 	}
 	else{
 		error("go: Difficulty not valid\n");
@@ -186,6 +204,8 @@ Best AI::minmax(int depth){
 		Best temp;
 		temp.bestMove = "";
 		temp.bestVal = evaluate(states.top(), playerColor);
+		//print(states.top(), playerColor);
+		//cout << temp.bestVal << endl;
 		return temp;
 	}
 	
@@ -206,7 +226,6 @@ Best AI::minmax(int depth){
 							bestMove = ss.str();
 						}
 						rc.bestMove = bestMove;
-						return rc;
 					}
 				}
 				else{						//AI is white
@@ -222,7 +241,6 @@ Best AI::minmax(int depth){
 							bestMove = ss.str();
 						}
 						rc.bestMove = bestMove;
-						return rc;
 					}
 				}
 			}
@@ -240,7 +258,6 @@ Best AI::minmax(int depth){
 							bestMove = ss.str();
 						}
 						rc.bestMove = bestMove;
-						return rc;
 					}
 				}
 				else{						//AI is white
@@ -256,12 +273,12 @@ Best AI::minmax(int depth){
 							bestMove = ss.str();
 						}
 						rc.bestMove = bestMove;
-						return rc;
 					}
 				}
 			}
 		}
 	}
+	return rc;
 }
 
 int AI::evaluate(vector< vector<char> > state, char player){
@@ -269,16 +286,16 @@ int AI::evaluate(vector< vector<char> > state, char player){
 	
 	//check corners
 	if(state[0][0] == player){
-		val += 20;
+		val += 1000;
 	}
 	if(state[0][7] == player){
-		val += 20;
+		val += 1000;
 	}
 	if(state[7][0] == player){
-		val += 20;
+		val += 1000;
 	}
 	if(state[7][7] == player){
-		val += 20;
+		val += 1000;
 	}
 	
 	//number openent moves
@@ -297,6 +314,7 @@ int AI::evaluate(vector< vector<char> > state, char player){
 				}
 			}
 		}
+		return val;
 	}
 	
 	//number of pieces
@@ -733,4 +751,63 @@ char AI::evalSpace(vector< vector<char> > state, int column, int row){
 	else{
 		return EMPTY;
 	}
+}
+
+void AI::print(vector< vector<char> > state, char player){
+	//first row
+	cout << "\n";
+	cout << " |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
+	if(player == BLACK){
+		for(int i=0; i<ROWS; i++){
+		cout << i+1 << "|";
+			for(int j=0; j<COLUMNS; j++){
+				char piece = '_'; //default as a space (no pieces present)
+				if(state[j][i] == BLACK){
+					piece = '@';
+				}
+				else if(state[j][i] == WHITE){
+					piece = 'O';
+				}
+				else if(state[j][i] == POSSIBLE_BLACK_MOVE){//mark a square as a potential move
+					piece = 'X';
+				}
+				else if(state[j][i] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					piece = 'X';
+				}
+				else
+					piece = '_';
+				cout << "__" << piece << "__|";
+			}
+		cout << endl;
+		}
+		cout << endl;
+	}
+	
+	else if(player == WHITE){	
+		for(int i=0; i<ROWS; i++){
+		cout << i+1 << "|";
+			for(int j=0; j<COLUMNS; j++){
+				char piece = '_';
+				if(state[j][i] == BLACK){
+					piece = '@';
+				}
+				else if(state[j][i] == WHITE){
+					piece = 'O';
+				}
+				else if(state[j][i] == POSSIBLE_WHITE_MOVE){//mark a square as a potential move
+					piece = 'X';
+				}
+				else if(state[j][i] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					piece = 'X';
+				}
+				else
+					piece = '_';
+				cout << "__" << piece << "__|";
+			}
+		cout << endl;
+		}
+		cout << endl;
+	}
+	else 
+		error("print: invalid player passed");
 }
