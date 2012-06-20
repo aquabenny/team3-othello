@@ -22,7 +22,7 @@ int main(){
 	
 	//ai1
 	ai1.setPlayerColor(BLACK);
-	ai1.setDifficulty(HARD);
+	ai1.setDifficulty(MEDIUM);
 	
 	//ai2
 	ai2.setPlayerColor(WHITE);
