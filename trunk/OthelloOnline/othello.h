@@ -785,7 +785,7 @@ Othello::Othello(){
 	display = ON;		//turn off after debugging?
 	numStates = 1;
 	
-	print(states[currState]);		//used for debugging
+	print(states[currState], BLACK);		//used for debugging
 }
 
 /*************************PUBLIC FUNCTIONS**************************/
@@ -887,7 +887,7 @@ int Othello::parse(string input, char player){
 			return 0;
 		}
 		if(display){
-			print(states[currState]);
+			print(states[currState], player);
 		}
 		return 0;
 	}
@@ -898,7 +898,7 @@ int Othello::parse(string input, char player){
 			return 0;
 		}
 		if(display){
-			print(states[currState]);
+			print(states[currState], player);
 		}
 		return 0;
 	}
@@ -921,7 +921,7 @@ int Othello::parse(string input, char player){
 					//valid move. check if game is over
 					if(endGame()){
 						if(display){
-							print(states[currState]);
+							print(states[currState], player);
 						}
 						if(score(states[currState], WHITE) == score(states[currState], BLACK)){			//tie
 							cout << "Tie game! Final scores\nBLACK pieces: "
@@ -948,7 +948,7 @@ int Othello::parse(string input, char player){
 						if(numMoves(states[currState], opposingPlayer(player)) == 0){
 							cout << "Opposing player has no move to make. Go again!\n";
 							if(display){
-								print(states[currState], opposingPlayer(player));				//print(states[currState]);		change back after debugging
+								print(states[currState], player);				//print(states[currState]);		change back after debugging
 							}
 							return 0;
 						}

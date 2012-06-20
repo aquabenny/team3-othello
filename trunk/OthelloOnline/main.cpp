@@ -15,12 +15,21 @@ Description: This is the main file which takes in user input
 
 int main(){
 	Othello o;
-	AI ai;
+	AI ai1, ai2;
 	string input;
 	int rc = 0;
 	cout << "Welcome to the best Othello game eva!\n";
+	
+	//ai1
+	ai1.setPlayerColor(BLACK);
+	ai1.setDifficulty(HARD);
+	
+	//ai2
+	ai2.setPlayerColor(WHITE);
+	ai2.setDifficulty(HARD);
 		 
 	//set difficulty
+	/*
 	bool goAgain = false;
 	do{
 		cout << "\nEnter a difficulty\n>";
@@ -51,44 +60,47 @@ int main(){
 		getline(cin, colorInput);
 		if(colorInput == "BLACK"){
 			ai.setPlayerColor(WHITE);
+			ai2.setPlayerColor(BLACK);
 			goAgain = false;
 		}
 		else if(colorInput == "WHITE"){
 			ai.setPlayerColor(BLACK);
+			ai2.setPlayerColor(WHITE);
 			goAgain = false;
 		}
 		else{
-			cout << "Invalid difficulty.\n";
+			cout << "Invalid color.\n";
 			goAgain = true;
 		}
 	}while(goAgain);
+	*/
 	
 	//play
 	while(rc != 2){
 		//BLACKs turn
 		do{
-			if(ai.getColor() == BLACK){
+			if(ai1.getColor() == BLACK){
 				cout << "\nBLACK>";
-				rc = o.parse(ai.go(o), BLACK);
+				rc = o.parse(ai1.go(o), BLACK);
 			}
 			else{
 				cout << "\nBLACK>";
-				getline(cin, input);
-				rc = o.parse(input, BLACK);
+				//getline(cin, input);
+				rc = o.parse(ai2.go(o), BLACK);
 			}
 		}while(rc == 0);
 		
 		if(rc != 2){
 			//WHITEs turn
 			do{
-				if(ai.getColor() == WHITE){
+				if(ai1.getColor() == WHITE){
 					cout << "\nWHITE>";
-					rc = o.parse(ai.go(o), WHITE);
+					rc = o.parse(ai1.go(o), WHITE);
 				}
 				else{
 					cout << "\nWHITE>";
-					getline(cin, input);
-					rc = o.parse(input, WHITE);
+					//getline(cin, input);
+					rc = o.parse(ai2.go(o), WHITE);
 				}
 			}while(rc == 0);
 		}

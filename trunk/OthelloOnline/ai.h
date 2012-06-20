@@ -71,6 +71,7 @@ void AI::setPlayerColor(char color){
 }
 
 string AI::go(Othello &o){
+	cout << "Please wait. AI thinking\n\n";
 	if(difficulty == EASY){
 		//do a random move
 		int moveNum = 0;
@@ -171,6 +172,7 @@ void AI::copyCurrState(Othello &o){
 }
 
 //keep initial call even
+//add player parameter???
 Best AI::minmax(int depth){
 
 /*
@@ -314,7 +316,6 @@ int AI::evaluate(vector< vector<char> > state, char player){
 				}
 			}
 		}
-		return val;
 	}
 	
 	//number of pieces
@@ -338,6 +339,7 @@ int AI::evaluate(vector< vector<char> > state, char player){
 			}
 		}
 	}
+	return val;
 }
 
 int AI::testMove(int column, int row, char player){
