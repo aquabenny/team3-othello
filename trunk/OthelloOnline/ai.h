@@ -10,7 +10,7 @@ Description: This is the AI class. It can take in a state and
 
 struct Best{
 	string bestMove;
-	int bestVal;
+	int val;
 };
 
 
@@ -19,13 +19,17 @@ class AI{
 	char playerColor;
 	char state[COLUMNS][ROWS];
 	void copyCurrState(Othello &o);
-	stack< vector< vector<char> > > states/*[COLUMNS][ROWS]*/;
-	Best minmax(int depth);
-	int evaluate(vector< vector<char> > state, char player);
-	int testMove(int column, int row, char player);
+	//stack< vector< vector<char> > > states/*[COLUMNS][ROWS]*/;
+	//Best minmax(int depth);
+	Best minMax(vector< vector<char> > state);
+	Best maxMove(vector< vector<char> > state);
+	Best minMove(vector< vector<char> > state); 
+	int evaluate(vector< vector<char> > state);
+	vector <vector<char> > testMove(vector <vector<char> >, int column, int row, char player);
 	char opposingPlayer(char player);
 	int numMoves(vector< vector<char> > state, char player);
 	void print(vector< vector<char> > state, char player);
+	int depth;
 	
 	//helper functions for testMove
 	char evalSpace(vector< vector<char> >, int column, int row);
@@ -54,7 +58,7 @@ AI::AI(){
 }
 
 void AI::setDifficulty(int diff){
-	if(diff == EASY || diff == MEDIUM || diff == HARD){
+	if(diff == EASY || diff == MEDIUM || diff == HARD || diff == EXPERT){
 		difficulty = diff;
 	}
 	else{
@@ -131,10 +135,9 @@ string AI::go(Othello &o){
 			columns.push_back(rows);
 			rows.clear();
 		}
-		states.push(columns);
 		
 		//mightymax
-		Best temp = minmax(2);
+		Best temp = minMax(columns);
 		cout << temp.bestMove << endl;
 		return temp.bestMove;	
 	}
@@ -151,12 +154,10 @@ string AI::go(Othello &o){
 			columns.push_back(rows);
 			rows.clear();
 		}
-		states.push(columns);
 		
 		//mightymax
-		Best temp = minmax(2);
+		Best temp = minMax(columns);
 		cout << temp.bestMove << endl;
-		//cout << temp.bestVal << endl;
 		return temp.bestMove;	
 	}
 	else if(difficulty == EXPERT){
@@ -172,12 +173,10 @@ string AI::go(Othello &o){
 			columns.push_back(rows);
 			rows.clear();
 		}
-		states.push(columns);
 		
 		//mightymax
-		Best temp = minmax(4);
+		Best temp = minMax(columns);
 		cout << temp.bestMove << endl;
-		//cout << temp.bestVal << endl;
 		return temp.bestMove;	
 	}
 	else{
@@ -193,140 +192,105 @@ void AI::copyCurrState(Othello &o){
 	o.copyCurrState(state);
 }
 
-//keep initial call even
-//add player parameter???
-Best AI::minmax(int depth){
+Best AI::minMax(vector< vector<char> > state){
+	depth = 0;
+	return maxMove(state);
+}
 
-/*
- int MinMax(int depth)
-{
-    int best = -INFINITY;
-    int val;
-
-    if (depth <= 0)
-        return Evaluate();
-
-    GenerateLegalMoves();
-    while (MovesLeft()) {
-        MakeNextMove();
-        val = -MinMax(depth - 1);
-        UnmakeMove();
-        if (val > best)
-            best = val;
-    }
-    return best;
-} 
-*/
-	Best rc;
-	rc.bestVal = -INFINITY;
-	int val;
-	//string bestMove;
-	
-	if(depth <= 0
-	   || (numMoves(states.top(), playerColor) == 0 && depth%2 == 0)
-	   || (numMoves(states.top(), opposingPlayer(playerColor)) == 0 && depth%2 == 1)){
+Best AI::maxMove(vector< vector<char> > state){
+	if(depth == 2){
 		Best temp;
+		temp.val = evaluate(state);
 		temp.bestMove = "";
-		temp.bestVal = evaluate(states.top(), playerColor);
-		//print(states.top(), playerColor);
-		//cout << temp.bestVal << endl;
 		return temp;
 	}
-	
-	//for each move
-	for(int i=0; i<COLUMNS; i++){
-		for(int j=0; j<ROWS; j++){
-			if(depth%2 == 0){	//even- AI's move
-				if(playerColor == BLACK){	//AI is black
-					if(states.top()[i][j] == POSSIBLE_BLACK_MOVE
-					   || states.top()[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-						testMove(i, j, BLACK);		//put new state on the stack
-						val = -minmax(depth - 1).bestVal;
-						states.pop();
-						if( val > rc.bestVal){
-							rc.bestVal = val;
+	else{
+		Best temp;
+		temp.val = -INFINITY;
+		temp.bestMove = "";
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				if(playerColor == BLACK){
+					if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+						vector< vector<char> > minState = testMove(state, i, j, playerColor);
+						Best moveVal = minMove(minState);
+						if(moveVal.val > temp.val){
+							temp.val = moveVal.val;
 							stringstream ss;
 							ss << (char)(i+97) << (j+1);
-							rc.bestMove = ss.str();
+							temp.bestMove = ss.str();
 						}
-						//rc.bestMove = bestMove;
 					}
 				}
-				else{						//AI is white
-					if(states.top()[i][j] == POSSIBLE_WHITE_MOVE
-					   || states.top()[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-						testMove(i, j, WHITE);		//put new state on the stack
-						val = -minmax(depth - 1).bestVal;
-						states.pop();
-						if( val > rc.bestVal){
-							rc.bestVal = val;
+				else{
+					if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+						vector< vector<char> > minState = testMove(state, i, j, playerColor);
+						Best moveVal = minMove(minState);
+						if(moveVal.val > temp.val){
+							temp.val = moveVal.val;
 							stringstream ss;
 							ss << (char)(i+97) << (j+1);
-							rc.bestMove = ss.str();
+							temp.bestMove = ss.str();
 						}
-						//rc.bestMove = bestMove;
 					}
 				}
 			}
-			else{				//odd- human's move
-				if(playerColor == BLACK){	//AI is black
-					if(states.top()[i][j] == POSSIBLE_WHITE_MOVE
-					   || states.top()[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-						testMove(i, j, WHITE);		//put new state on the stack
-						val = -minmax(depth - 1).bestVal;
-						states.pop();
-						if( val > rc.bestVal){
-							rc.bestVal = val;
-							stringstream ss;
-							ss << (char)(i+97) << (j+1);
-							rc.bestMove = ss.str();
-						}
-						//rc.bestMove = bestMove;
+		}
+		return temp;
+	}
+}
+
+Best AI::minMove(vector< vector<char> > state){
+	Best temp;
+	temp.val = INFINITY;
+	temp.bestMove = "";
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
+			if(playerColor == BLACK){
+				if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					vector< vector<char> > maxState = testMove(state, i, j, opposingPlayer(playerColor));
+					depth = 2;
+					Best moveVal = maxMove(maxState);
+					depth = 0;
+					if(moveVal.val < temp.val){
+						temp.val = moveVal.val;
+						stringstream ss;
+						ss << (char)(i+97) << (j+1);
+						temp.bestMove = ss.str();
 					}
 				}
-				else{						//AI is white
-					if(states.top()[i][j] == POSSIBLE_BLACK_MOVE
-					   || states.top()[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-						testMove(i, j, BLACK);		//put new state on the stack
-						val = -minmax(depth - 1).bestVal;
-						states.pop();
-						if( val > rc.bestVal){
-							rc.bestVal = val;
-							stringstream ss;
-							ss << (char)(i+97) << (j+1);
-							rc.bestMove = ss.str();
-						}
-						//rc.bestMove = bestMove;
+			}
+			else{
+				if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					vector< vector<char> > maxState = testMove(state, i, j, opposingPlayer(playerColor));
+					depth = 2;
+					Best moveVal = maxMove(maxState);
+					depth = 0;
+					if(moveVal.val < temp.val){
+						temp.val = moveVal.val;
+						stringstream ss;
+						ss << (char)(i+97) << (j+1);
+						temp.bestMove = ss.str();
 					}
 				}
 			}
 		}
 	}
-	return rc;
+	return temp;
 }
 
-int AI::evaluate(vector< vector<char> > state, char player){
+int AI::evaluate(vector< vector<char> > state){
 	if(difficulty == MEDIUM){
 		int val = 0;
 	
 		//number of pieces
 		for(int i=0; i<COLUMNS; i++){
 			for(int j=0; j<ROWS; j++){
-				if(player == BLACK){
-					if(state[i][j] == BLACK){
-						val += 1;
-					}
-					if(state[i][j] == WHITE){
-						val -= 1;
-					}
+				if(state[i][j] == playerColor){
+					val += 1;
 				}
-				else{
-					if(state[i][j] == WHITE){
-						val += 1;
-					}
-					if(state[i][j] == BLACK){
-						val -= 1;
-					}
+				if(state[i][j] == opposingPlayer(playerColor)){
+					val -= 1;
 				}
 			}
 		}
@@ -336,33 +300,57 @@ int AI::evaluate(vector< vector<char> > state, char player){
 		int val = 0;
 		
 		//check corners
-		if(state[0][0] == player){
-			val += 13;
+		if(state[0][0] == playerColor){
+			val += 300;
 		}
-		if(state[0][7] == player){
-			val += 13;
+		if(state[0][7] == playerColor){
+			val += 300;
 		}
-		if(state[7][0] == player){
-			val += 13;
+		if(state[7][0] == playerColor){
+			val += 300;
 		}
-		if(state[7][7] == player){
-			val += 13;
+		if(state[7][7] == playerColor){
+			val += 300;
+		}
+		
+		//check opposing corners
+		if(state[0][0] == opposingPlayer(playerColor)){
+			val -= 300;
+		}
+		if(state[0][7] == opposingPlayer(playerColor)){
+			val -= 300;
+		}
+		if(state[7][0] == opposingPlayer(playerColor)){
+			val -= 300;
+		}
+		if(state[7][7] == opposingPlayer(playerColor)){
+			val -= 300;
 		}
 		
 		//number openent moves
 		for(int i=0; i<COLUMNS; i++){
 			for(int j=0; j<ROWS; j++){
-				if(opposingPlayer(player) == BLACK){
+				if(playerColor == WHITE){
 					if(state[i][j] == POSSIBLE_BLACK_MOVE
 					   || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-						val -= 7;
+						val -= 10;
 					}
 				}
 				else{
 					if(state[i][j] == POSSIBLE_WHITE_MOVE
 					   || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-						val -= 7;
+						val -= 10;
 					}
+				}
+			}
+		}
+		
+		//end of game means worry about winning
+		int numSpaces = 0;
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				if(state[i][j] != BLACK && state[i][j] != WHITE){
+					numSpaces++;
 				}
 			}
 		}
@@ -370,31 +358,33 @@ int AI::evaluate(vector< vector<char> > state, char player){
 		//number of pieces
 		for(int i=0; i<COLUMNS; i++){
 			for(int j=0; j<ROWS; j++){
-				if(player == BLACK){
-					if(state[i][j] == BLACK){
+				if(state[i][j] == playerColor){
+					if(numSpaces < 10){
 						val += 10;
 					}
-					if(state[i][j] == WHITE){
-						val -= 10;
+					else{
+						val += 3;
 					}
 				}
-				else{
-					if(state[i][j] == WHITE){
+				if(state[i][j] == opposingPlayer(playerColor)){
+					if(numSpaces < 10){
 						val += 10;
 					}
-					if(state[i][j] == BLACK){
-						val -= 10;
+					else{
+						val += 3;
 					}
 				}
 			}
 		}
+		
 		return val;
 	}
+	
 }
 
-int AI::testMove(int column, int row, char player){
+vector <vector<char> > AI::testMove(vector <vector<char> > state, int column, int row, char player){
 	//create the next state
-	vector< vector <char> > newState = states.top();
+	vector< vector <char> > newState = state;
 
 	//check each direction and flip oposing pieces
 	int tempColumn;										//the next column to look at
@@ -510,11 +500,8 @@ int AI::testMove(int column, int row, char player){
 		}
 	}
 	
-	//put it on the stack
-	states.push(newState);
+	return newState;
 	
-	//success
-	return 0;
 }
 
 char AI::opposingPlayer(char player){
