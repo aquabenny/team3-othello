@@ -7,6 +7,7 @@ Files Included:
 
 Othello    	- Executable output from g++, used to run the program
 othello.h   - Header file containing the Othello class and mechanics
+ai.h        - Header containing definition and implementation of the AI opponent
 main.cpp 	- Source code for running a two-player local game
 
 *****************************************************
@@ -24,11 +25,11 @@ This program launches a two player game of Reversi/Othello. It begins by showing
 and prompting the BLACK user for a command.
 
 The following commands are accepted by the parser:
-BLACK 		- player picks the black side (non-functional in this version)
-WHITE 		- player picks the white side (non-functional in this version)
-EASY  		- sets AI difficulty to easy (non-functional in this version)
-MEDIUM		- sets AI difficulty to medium (non-functional in this version)
-HARD		- sets AI difficulty to hard (non-functional in this version)
+BLACK 		- player picks the black side
+WHITE 		- player picks the white side
+EASY  		- sets AI difficulty to easy
+MEDIUM		- sets AI difficulty to medium
+HARD		- sets AI difficulty to hard
 DISPLAY_OFF	- turns the game's display of the board off
 DISPLAY_ON 	- turns the display of the board on (default)
 SHOW_NEXT_POS - Show the game board with the next possible moves for the current player's turn
