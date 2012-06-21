@@ -18,6 +18,9 @@ int main(){
 	AI ai1, ai2;
 	string input;
 	int rc = 0;
+	ParseReturn pr;
+	pr.str = "";
+	pr.val = 0;
 	cout << "Welcome to the best Othello game eva!\n";
 	
 	/*
@@ -30,34 +33,37 @@ int main(){
 	ai2.setPlayerColor(WHITE);
 	ai2.setDifficulty(MEDIUM);
 	
-		//play
-	while(rc != 2){
+	//play
+	cout << o.print(BLACK);
+	while(pr.val != 2){
 		//BLACKs turn
 		do{
 			if(ai1.getColor() == BLACK){
 				cout << "\nBLACK>";
-				rc = o.parse(ai1.go(o), BLACK);
+				pr = o.parse(ai1.go(o), BLACK);
+				cout << pr.str;
 			}
 			else{
 				cout << "\nBLACK>";
-				//getline(cin, input);
-				rc = o.parse(ai2.go(o), BLACK);
+				pr = o.parse(ai2.go(o), BLACK);
+				cout << pr.str;
 			}
-		}while(rc == 0);
+		}while(pr.val == 0);
 		
-		if(rc != 2){
+		if(pr.val != 2){
 			//WHITEs turn
 			do{
 				if(ai1.getColor() == WHITE){
 					cout << "\nWHITE>";
-					rc = o.parse(ai1.go(o), WHITE);
+					pr = o.parse(ai1.go(o), WHITE);
+					cout << pr.str;
 				}
 				else{
 					cout << "\nWHITE>";
-					//getline(cin, input);
-					rc = o.parse(ai2.go(o), WHITE);
+					pr = o.parse(ai2.go(o), WHITE);
+					cout << pr.str;
 				}
-			}while(rc == 0);
+			}while(pr.val == 0);
 		}
 	}
 	*/
@@ -80,10 +86,6 @@ int main(){
 		}
 		else if(diffInput == "HARD"){
 			ai1.setDifficulty(HARD);
-			goAgain = false;
-		}
-		else if(diffInput == "EXPERT"){
-			ai1.setDifficulty(EXPERT);
 			goAgain = false;
 		}
 		else{
@@ -112,35 +114,38 @@ int main(){
 	}while(goAgain);
 	
 	//play
-	while(rc != 2){
+	cout << o.print(BLACK);
+	while(pr.val != 2){
 		//BLACKs turn
 		do{
 			if(ai1.getColor() == BLACK){
 				cout << "\nBLACK>";
-				rc = o.parse(ai1.go(o), BLACK);
+				pr = o.parse(ai1.go(o), BLACK);
+				cout << pr.str;
 			}
 			else{
 				cout << "\nBLACK>";
 				getline(cin, input);
-				rc = o.parse(input, BLACK);
+				pr = o.parse(input, BLACK);
+				cout << pr.str;
 			}
-		}while(rc == 0);
+		}while(pr.val == 0);
 		
-		if(rc != 2){
+		if(pr.val != 2){
 			//WHITEs turn
 			do{
 				if(ai1.getColor() == WHITE){
 					cout << "\nWHITE>";
-					rc = o.parse(ai1.go(o), WHITE);
+					pr = o.parse(ai1.go(o), WHITE);
+					cout << pr.str;
 				}
 				else{
 					cout << "\nWHITE>";
 					getline(cin, input);
-					rc = o.parse(input, WHITE);
+					pr = o.parse(input, WHITE);
+					cout << pr.str;
 				}
-			}while(rc == 0);
+			}while(pr.val == 0);
 		}
 	}
-	
-
 }
