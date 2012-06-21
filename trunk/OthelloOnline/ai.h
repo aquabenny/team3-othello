@@ -55,6 +55,7 @@ AI::AI(){
 	difficulty = EASY;
 	playerColor = WHITE;
 	srand(time(NULL));
+	depth = 0;
 }
 
 void AI::setDifficulty(int diff){
@@ -137,6 +138,7 @@ string AI::go(Othello &o){
 		}
 		
 		//mightymax
+		depth = 0;
 		Best temp = minMax(columns);
 		cout << temp.bestMove << endl;
 		return temp.bestMove;	
@@ -156,6 +158,7 @@ string AI::go(Othello &o){
 		}
 		
 		//mightymax
+		depth = 0;
 		Best temp = minMax(columns);
 		cout << temp.bestMove << endl;
 		return temp.bestMove;	
@@ -198,10 +201,13 @@ Best AI::minMax(vector< vector<char> > state){
 }
 
 Best AI::maxMove(vector< vector<char> > state){
-	if(depth == 2){
+	depth++;
+	//cout << depth << endl;
+	if(depth >= 3 || (numMoves(state, playerColor) == 0 && numMoves(state, opposingPlayer(playerColor)))){
 		Best temp;
 		temp.val = evaluate(state);
 		temp.bestMove = "";
+		depth--;
 		return temp;
 	}
 	else{
@@ -236,11 +242,13 @@ Best AI::maxMove(vector< vector<char> > state){
 				}
 			}
 		}
+		depth--;
 		return temp;
 	}
 }
 
 Best AI::minMove(vector< vector<char> > state){
+	depth++;
 	Best temp;
 	temp.val = INFINITY;
 	temp.bestMove = "";
@@ -249,9 +257,7 @@ Best AI::minMove(vector< vector<char> > state){
 			if(playerColor == BLACK){
 				if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 					vector< vector<char> > maxState = testMove(state, i, j, opposingPlayer(playerColor));
-					depth = 2;
 					Best moveVal = maxMove(maxState);
-					depth = 0;
 					if(moveVal.val < temp.val){
 						temp.val = moveVal.val;
 						stringstream ss;
@@ -263,9 +269,7 @@ Best AI::minMove(vector< vector<char> > state){
 			else{
 				if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 					vector< vector<char> > maxState = testMove(state, i, j, opposingPlayer(playerColor));
-					depth = 2;
 					Best moveVal = maxMove(maxState);
-					depth = 0;
 					if(moveVal.val < temp.val){
 						temp.val = moveVal.val;
 						stringstream ss;
@@ -276,6 +280,7 @@ Best AI::minMove(vector< vector<char> > state){
 			}
 		}
 	}
+	depth--;
 	return temp;
 }
 
