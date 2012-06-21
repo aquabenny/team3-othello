@@ -24,11 +24,11 @@ int main(){
 	//AI play each other
 	//ai1
 	ai1.setPlayerColor(BLACK);
-	ai1.setDifficulty(MEDIUM);
+	ai1.setDifficulty(EASY);
 	
 	//ai2
 	ai2.setPlayerColor(WHITE);
-	ai2.setDifficulty(HARD);
+	ai2.setDifficulty(MEDIUM);
 	
 		//play
 	while(rc != 2){
@@ -61,6 +61,7 @@ int main(){
 		}
 	}
 	*/
+	
 	
 	//You play AI
 	//set difficulty
