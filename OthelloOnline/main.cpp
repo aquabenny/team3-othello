@@ -20,15 +20,15 @@ int main(){
 	int rc = 0;
 	cout << "Welcome to the best Othello game eva!\n";
 	
-	/*
+	
 	//AI play each other
 	//ai1
 	ai1.setPlayerColor(BLACK);
-	ai1.setDifficulty(EASY);
+	ai1.setDifficulty(HARD);
 	
 	//ai2
 	ai2.setPlayerColor(WHITE);
-	ai2.setDifficulty(MEDIUM);
+	ai2.setDifficulty(EASY);
 	
 		//play
 	while(rc != 2){
@@ -60,9 +60,9 @@ int main(){
 			}while(rc == 0);
 		}
 	}
-	*/
 	
 	
+	/*
 	//You play AI
 	//set difficulty
 	bool goAgain = false;
@@ -141,6 +141,6 @@ int main(){
 			}while(rc == 0);
 		}
 	}
-	
+	*/
 
 }

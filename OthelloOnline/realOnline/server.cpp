@@ -44,6 +44,8 @@ using namespace std;
 
 int main(int argc, char *argv[]) {   
 
+	/****************************************************SET UP CONNECTION***************************************************/
+
 	Othello o;
 	AI ai1, ai2;
 	string input;
@@ -117,6 +119,8 @@ int main(int argc, char *argv[]) {
 	int nbytes = 0;      			/* the number of bytes read          */
     char reply[BUFSIZ];      	/* a buffer to send replies to client */
 	char buf[BUFSIZ];			/* buffer to hold incoming command    */
+	
+	/*********************************************************SET UP AI*****************************************************/
 	
 	//set difficulty
 	bool goAgain = false;
@@ -221,33 +225,30 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-    /*	Loop continuously, respond to single client's requests*/
-    while (rc != 2) {
+    /*********************************************************PLAY GAME*****************************************************/
+		
+		ParseReturn pr;
+		pr.str = "";
+		pr.val = 0;
+    while (pr.val != 2) {
 		//blacks turn
 		do{
-			if(ai1.getColor() == BLACK){
-				sprintf(prompt,"\nBLACK\n\r>");
+			if(ai1.getColor() == BLACK){		//ai is black
+				sprintf(prompt,"\nBLACK>");
 				if (write(client_socket_fd, &prompt, strlen(prompt)) < 0) {
 					perror("write failed!");
 					exit(1);
 				}
-					rc = o.parse(ai1.go(o), BLACK);
-					string str;
-					if(rc == 1){
-						str = o.print(WHITE);
-					}
-					else{
-						str = o.print(BLACK);
-					}
+					pr = o.parse(ai1.go(o), BLACK);
 					char board [4096];
-					sprintf(board, str.c_str());
+					sprintf(board, pr.str.c_str());
 				if (write(client_socket_fd, &board, strlen(board)) < 0) {
 					perror("write failed!");
 					exit(1);
 				}
 			}
-			else{
-				sprintf(prompt,"\nBLACK\n\r>");
+			else{		//human is black
+				sprintf(prompt,"\nBLACK>");
 				if (write(client_socket_fd, &prompt, strlen(prompt)) < 0) {
 					perror("write failed!");
 					exit(1);
@@ -275,48 +276,34 @@ int main(int argc, char *argv[]) {
 				
 				input = buf;
 				input.erase(input.end()-1);
-				rc = o.parse(input, BLACK);
-				string str;
-				if(rc == 1){
-					str = o.print(WHITE);
-				}
-				else{
-					str = o.print(BLACK);
-				}
+				pr = o.parse(input, BLACK);
 				char board [4096];
-				sprintf(board, str.c_str());
+				sprintf(board, pr.str.c_str());
 				if (write(client_socket_fd, &board, strlen(board)) < 0) {
 					perror("write failed!");
 					exit(1);
 				}
 			}
-		}while(rc == 0);
-		if(rc != 2) {
+		}while(pr.val == 0);
+		if(pr.val != 2) {
 			//whites turn
 			do{
-				if(ai1.getColor() == WHITE){
-					sprintf(prompt,"\nWHITE\n\r>");
+				if(ai1.getColor() == WHITE){		//ai is white
+					sprintf(prompt,"\nWHITE>");
 					if (write(client_socket_fd, &prompt, strlen(prompt)) < 0) {
 						perror("write failed!");
 						exit(1);
 					}
-					rc = o.parse(ai1.go(o), WHITE);
-					string str;
-					if(rc == 1){
-						str = o.print(BLACK);
-					}
-					else{
-						str = o.print(WHITE);
-					}
+					pr = o.parse(ai1.go(o), WHITE);
 					char board [4096];
-					sprintf(board, str.c_str());
+					sprintf(board, pr.str.c_str());
 					if (write(client_socket_fd, &board, strlen(board)) < 0) {
 						perror("write failed!");
 						exit(1);
 					}
 				}
-				else{
-					sprintf(prompt,"\nWHITE\n\r>");
+				else{		//human is white
+					sprintf(prompt,"\nWHITE>");
 					if (write(client_socket_fd, &prompt, strlen(prompt)) < 0) {
 						perror("write failed!");
 						exit(1);
@@ -324,7 +311,7 @@ int main(int argc, char *argv[]) {
 					
 					bzero(buf,BUFSIZ);
 					done = 0;
-					where =0;
+					where = 0;
 					
 					/* Read data from client. Read will block until there is something to read */
 					/* Note that read operates on the new file descriptor from accept */
@@ -344,53 +331,17 @@ int main(int argc, char *argv[]) {
 					
 					input = buf;
 					input.erase(input.end()-1);
-					rc = o.parse(input, WHITE);
-					string str;
-					if(rc == 1){
-						str = o.print(BLACK);
-					}
-					else{
-						str = o.print(WHITE);
-					}
+					pr = o.parse(input, WHITE);
 					char board [4096];
-					sprintf(board, str.c_str());
+					sprintf(board, pr.str.c_str());
 					if (write(client_socket_fd, &board, strlen(board)) < 0) {
 						perror("write failed!");
 						exit(1);
 					}
 				}
-			}while(rc == 0);
+			}while(pr.val == 0);
 		}
-    }//End While(rc != 2)
-	
-	{
-		stringstream ss;
-		if(o.numPieces(BLACK) > o.numPieces(WHITE)){
-			ss << "BLACK wins! Final scores\n";
-			ss << "BLACK Pieces: " << o.numPieces(BLACK) << endl;
-			ss << "WHITE Pieces: " << o.numPieces(WHITE) << endl;
-			ss << "BLACK Score: " << o.score(BLACK) << endl;
-		}
-		else if(o.numPieces(BLACK) < o.numPieces(WHITE)){
-			ss << "WHITE wins! Final scores\n";
-			ss << "BLACK Pieces: " << o.numPieces(BLACK) << endl;
-			ss << "WHITE Pieces: " << o.numPieces(WHITE) << endl;
-			ss << "WHITE Score: " << o.score(WHITE) << endl;
-		}
-		else{
-			ss << "Tie game! Final scores\n";
-			ss << "BLACK Pieces: " << o.numPieces(BLACK) << endl;
-			ss << "WHITE Pieces: " << o.numPieces(WHITE) << endl;
-		}
-		
-		string str = ss.str();
-		char endMsg [4096];
-		sprintf(endMsg, str.c_str());
-		if (write(client_socket_fd, &endMsg, strlen(endMsg)) < 0) {
-			perror("write failed!");
-			exit(1);
-		}
-	}
+    }//End While(pr.val != 2)
 
 	if (shutdown(client_socket_fd,SHUT_RDWR)<0) {
 		perror("shutdown failure");
