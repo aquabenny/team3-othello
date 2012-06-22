@@ -314,6 +314,7 @@ Move AI::minMove(vector< vector<char> > state){
 	return temp;
 }
 
+//This function is called by the minMax function when a leaf node is found
 int AI::evaluate(vector< vector<char> > state){
 	if(difficulty == MEDIUM){
 		int val = 0;
@@ -415,6 +416,8 @@ int AI::evaluate(vector< vector<char> > state){
 	}	
 }
 
+//this function returns the next state when the corresponding move is made
+//used by the minMax function
 vector <vector<char> > AI::testMove(vector <vector<char> > state, int column, int row, char player){
 	//create the next state
 	vector< vector <char> > newState = state;
@@ -534,6 +537,24 @@ vector <vector<char> > AI::testMove(vector <vector<char> > state, int column, in
 	}
 	return newState;
 }
+
+/*************************HELPER FUNCTIONS**********************************/
+
+/*
+These functions check an empty space's direction. It returns EMPTY if
+no pieces will be flipped in that direction, BLACK if white pieces could
+be flipped in that direction, or WHITE if black pieces could be flipped
+in that direction.
+*/
+
+/*
+Each of these functions compares its next space with the current space
+while the next space is not off the board. If the next space is the
+opposite color of the current space, then it returns the next space.
+If the next space is not a black or white piece, then it returns EMPTY,
+meaning nothing would happen in that direction, regardless of which player
+made the move.
+*/
 
 char AI::left(vector< vector<char> > state, int column, int row){
 	int nextSpace, currSpace;

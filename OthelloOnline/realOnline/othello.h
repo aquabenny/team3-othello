@@ -97,14 +97,14 @@ public:
 	int getNumMoves(char player);
 	string print(char player);													//prints the board with possible moves for the given player
 	
-/*
-This function takes in a player's command, move, or comment
-and handles it accordingly. It returns 1 if it should be
-the next player's turn, 0 if it should stay the same player's
-turn, and returns 2 if the game should end. It also returns
-a string using the ParseReturn type. This string should
-be printed to the client.
-*/
+	/*
+	This function takes in a player's command, move, or comment
+	and handles it accordingly. It returns 1 if it should be
+	the next player's turn, 0 if it should stay the same player's
+	turn, and returns 2 if the game should end. It also returns
+	a string using the ParseReturn type. This string should
+	be printed to the client.
+	*/
 
 	ParseReturn parse(string input, char player);	
 };
