@@ -1,10 +1,10 @@
-
-/** Simple Iterating Telnet Server - Does not implement: http://datatracker.ietf.org/doc/rfc854/ **/
-/*	Demonstrates use of system calls socket(), bind(),
- *	listen(), accept(), read(), write() on the server side
- * 	The client is expected to be telnet. Single client. 
- *	This makes no consideration for security. This is a simple example to get started
- */
+/*
+File: server.cpp
+Project: CSCE315 Project 2
+Authors: Team 3 - Dylan McDougall, Sam Stewart, Stephen Ten Eyck
+Description: This is the server file which creates a server. When 
+a user connects, they will begin to play Othello.
+*/
 
 /* To compile: gcc -o telnetServerDemo telnetServerDemo.c -lnsl -lsocket -lresolv
 * on Solaris the basic socket functions are in different libraries and we add -lsocket -lnsl to link 
@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
 	bool goAgain = false;
 	char prompt[BUFSIZ];
 	do{
-		sprintf(prompt,"\nEnter a difficulty\n\r>");
+		sprintf(prompt,"\nEnter a difficulty <EASY/MEDIUM/HARD>\n\r>");
 		if (write(client_socket_fd, &prompt, strlen(prompt)) < 0) {
     		perror("write failed!");
 	        exit(1);
@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
 	//set color
 	goAgain = false;
 	do{
-		sprintf(prompt,"\nEnter a color\n\r>");
+		sprintf(prompt,"\nEnter a color <BLACK/WHITE>\n\r>");
 		if (write(client_socket_fd, &prompt, strlen(prompt)) < 0) {
     		perror("write failed!");
 	        exit(1);

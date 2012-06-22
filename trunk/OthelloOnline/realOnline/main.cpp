@@ -17,7 +17,6 @@ int main(){
 	Othello o;
 	AI ai1, ai2;
 	string input;
-	int rc = 0;
 	ParseReturn pr;
 	pr.str = "";
 	pr.val = 0;
@@ -73,7 +72,7 @@ int main(){
 	//set difficulty
 	bool goAgain = false;
 	do{
-		cout << "\nEnter a difficulty\n>";
+		cout << "\nEnter a difficulty <EASY/MEDIUM/HARD>\n>";
 		string diffInput;
 		getline(cin, diffInput);
 		if(diffInput == "EASY"){
@@ -96,7 +95,7 @@ int main(){
 	
 	//set color
 	do{
-		cout << "\nEnter your color\n>";
+		cout << "\nEnter your color <BLACK/WHITE>\n>";
 		string colorInput;
 		getline(cin, colorInput);
 		if(colorInput == "BLACK"){
