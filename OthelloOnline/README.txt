@@ -26,7 +26,7 @@ hardHard.cpp	- Tests BLACK: HARD versus WHITE: HARD
 *****************************************************
 Instructions:
 
-1) To set up the programs, type 'make' and the executables will be created.
+1) To set up the programs, type 'make -f Makefile' and the executables will be created.
 The executables can be run by simply typing their names in the command line.
 The executable files will be named as follows
 
