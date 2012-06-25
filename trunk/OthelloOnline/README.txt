@@ -1,23 +1,46 @@
 Othello Game Mechanics - README
 CSCE 315 Team 3
 Dylan McDougall, Same Stewart, Stephen Ten Eyck
-15 JUN 2012
+25 JUN 2012
 *****************************************************
 Files Included:
 
-Othello    	- Executable output from g++, used to run the program
+Makefile   	- Makefile for all cpp files, creates executables
 othello.h   - Header file containing the Othello class and mechanics
 ai.h        - Header containing definition and implementation of the AI opponent
-main.cpp 	- Source code for running a two-player local game
+main.cpp 	- Source code for local, Human versus AI game
+server.cpp  - Telnet server code
+
+*****BELOW ARE TESTING FILES FOR AI DIFFICULTIES*****
+
+easyEasy.cpp	- Tests BLACK: EASY versus WHITE: EASY
+easyMedium.cpp	- Tests BLACK: EASY versus WHITE: MEDIUM
+easyHard.cpp  	- Tests BLACK: EASY versus WHITE: HARD
+mediumEasy.cpp	- Tests BLACK: MEDIUM versus WHITE: EASY
+mediumMedium.cpp- Tests BLACK: MEDIUM versus WHITE: MEDIUM
+mediumHard.cpp	- Tests BLACK: MEDIUM versus WHITE: HARD
+hardEasy.cpp	- Tests BLACK: HARD versus WHITE: EASY
+hardMedium.cpp	- Tests BLACK: HARD versus WHITE: MEDIUM
+hardHard.cpp	- Tests BLACK: HARD versus WHITE: HARD
 
 *****************************************************
 Instructions:
 
-1) To run, in the command line type ./Othello and the program should launch.
+1) To set up the programs, type 'make' and the executables will be created.
+The executables can be run by simply typing their names in the command line.
+The executable files will be named as follows
 
-If there is an issue, please re-compile and run the program with the following commands:
-1) g++ main.cpp -o Othello
-2) ./Othello
+main 		- Used to play a local, Human versus AI game
+server 		- Runs the game telnet server on port 65144
+easyEasy	- Runs a test AI game - BLK: Easy versus WHT: Easy
+easyMed		- Runs a test AI game - BLK: Easy versus WHT: Medium
+easyHard	- Runs a test AI game - BLK: Easy versus WHT: Hard
+medEasy		- Runs a test AI game - BLK: Medium versus WHT: Easy
+medMed		- Runs a test AI game - BLK: Medium versus WHT: Medium
+medHard		- Runs a test AI game - BLK: Medium versus WHT: Hard 
+hardEasy	- Runs a test AI game - BLK: Hard versus WHT: Easy
+hardMed		- Runs a test AI game - BLK: Hard versus WHT: Medium
+hardHard	- Runs a test AI game - BLK: Hard versus WHT: Hard
 
 *****************************************************
 Program Specifications
