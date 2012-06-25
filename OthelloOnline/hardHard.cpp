@@ -22,49 +22,15 @@ int main(){
 	pr.val = 0;
 	cout << "Welcome to the best Othello game eva!\n";
 	
-	//You play AI
-	//set difficulty
-	bool goAgain = false;
-	do{
-		cout << "\nEnter a difficulty <EASY/MEDIUM/HARD>\n>";
-		string diffInput;
-		getline(cin, diffInput);
-		if(diffInput == "EASY"){
-			ai1.setDifficulty(EASY);
-			goAgain = false;
-		}
-		else if(diffInput == "MEDIUM"){
-			ai1.setDifficulty(MEDIUM);
-			goAgain = false;
-		}
-		else if(diffInput == "HARD"){
-			ai1.setDifficulty(HARD);
-			goAgain = false;
-		}
-		else{
-			cout << "Invalid difficulty.\n";
-			goAgain = true;
-		}
-	}while(goAgain);
 	
-	//set color
-	do{
-		cout << "\nEnter your color <BLACK/WHITE>\n>";
-		string colorInput;
-		getline(cin, colorInput);
-		if(colorInput == "BLACK"){
-			ai1.setPlayerColor(WHITE);
-			goAgain = false;
-		}
-		else if(colorInput == "WHITE"){
-			ai1.setPlayerColor(BLACK);
-			goAgain = false;
-		}
-		else{
-			cout << "Invalid color.\n";
-			goAgain = true;
-		}
-	}while(goAgain);
+	//AI play each other
+	//ai1
+	ai1.setPlayerColor(BLACK);
+	ai1.setDifficulty(HARD);
+	
+	//ai2
+	ai2.setPlayerColor(WHITE);
+	ai2.setDifficulty(HARD);
 	
 	//play
 	cout << o.print(BLACK);
@@ -78,8 +44,7 @@ int main(){
 			}
 			else{
 				cout << "\nBLACK>";
-				getline(cin, input);
-				pr = o.parse(input, BLACK);
+				pr = o.parse(ai2.go(o), BLACK);
 				cout << pr.str;
 			}
 		}while(pr.val == 0);
@@ -94,8 +59,7 @@ int main(){
 				}
 				else{
 					cout << "\nWHITE>";
-					getline(cin, input);
-					pr = o.parse(input, WHITE);
+					pr = o.parse(ai2.go(o), WHITE);
 					cout << pr.str;
 				}
 			}while(pr.val == 0);

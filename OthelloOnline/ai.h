@@ -8,28 +8,37 @@ Description: This is the AI class. It can take in a state and
 
 #include "othello.h"
 
-struct Best{
-	string bestMove;
+/*
+This is the return type for the minmax functions.
+It returns the value associated with the move and the 
+actual move as a string.
+*/
+
+struct Move{
+	string str;
 	int val;
 };
 
+/****************************************************************/
+/*								AI CLASS					   	*/
+/****************************************************************/
 
 class AI{
+	//private members
 	int difficulty;
 	char playerColor;
 	char state[COLUMNS][ROWS];
+	int depth;
+	
+	//private functions
 	void copyCurrState(Othello &o);
-	//stack< vector< vector<char> > > states/*[COLUMNS][ROWS]*/;
-	//Best minmax(int depth);
-	Best minMax(vector< vector<char> > state);
-	Best maxMove(vector< vector<char> > state);
-	Best minMove(vector< vector<char> > state); 
+	Move minMax(vector< vector<char> > state);
+	Move maxMove(vector< vector<char> > state);
+	Move minMove(vector< vector<char> > state); 
 	int evaluate(vector< vector<char> > state);
 	vector <vector<char> > testMove(vector <vector<char> >, int column, int row, char player);
 	char opposingPlayer(char player);
 	int numMoves(vector< vector<char> > state, char player);
-	void print(vector< vector<char> > state, char player);
-	int depth;
 	
 	//helper functions for testMove
 	char evalSpace(vector< vector<char> >, int column, int row);
@@ -43,14 +52,17 @@ class AI{
 	char leftDown(vector< vector<char> > state, int column, int row);
 	
 public:
-
+	//constructor
 	AI();
+	
+	//public functions
 	string go(Othello &o);
 	char getColor();
 	void setDifficulty(int diff);
 	void setPlayerColor(char color);
 };
 
+//constructor
 AI::AI(){
 	difficulty = EASY;
 	playerColor = WHITE;
@@ -58,8 +70,9 @@ AI::AI(){
 	depth = 0;
 }
 
+//set ai difficulty
 void AI::setDifficulty(int diff){
-	if(diff == EASY || diff == MEDIUM || diff == HARD || diff == EXPERT){
+	if(diff == EASY || diff == MEDIUM || diff == HARD){
 		difficulty = diff;
 	}
 	else{
@@ -67,6 +80,7 @@ void AI::setDifficulty(int diff){
 	}
 }
 
+//set ai color
 void AI::setPlayerColor(char color){
 	if(color == BLACK || color == WHITE){
 		playerColor = color;
@@ -76,8 +90,9 @@ void AI::setPlayerColor(char color){
 	}
 }
 
+//make move and return it as a string
 string AI::go(Othello &o){
-	cout << "Please wait. AI thinking\n\n";
+	//cout << "Please wait. AI thinking\n\n";
 	if(difficulty == EASY){
 		//do a random move
 		int moveNum = 0;
@@ -95,7 +110,7 @@ string AI::go(Othello &o){
 							//do this move
 							stringstream ss;
 							ss << (char)(i+97) << (j+1);
-							cout << ss.str() << endl;
+							//cout << ss.str() << endl;
 							return ss.str();
 						}
 						else{
@@ -111,7 +126,7 @@ string AI::go(Othello &o){
 							//do this move
 							stringstream ss;
 							ss << (char)(i+97) << (j+1);
-							cout << ss.str() << endl;
+							//cout << ss.str() << endl;
 							return ss.str();
 						}
 						else{
@@ -138,10 +153,9 @@ string AI::go(Othello &o){
 		}
 		
 		//mightymax
-		depth = 0;
-		Best temp = minMax(columns);
-		cout << temp.bestMove << endl;
-		return temp.bestMove;	
+		Move temp = minMax(columns);
+		//cout << temp.str << endl;
+		return temp.str;	
 	}
 	else if(difficulty == HARD){
 		//put currstate on the stack alone
@@ -158,85 +172,101 @@ string AI::go(Othello &o){
 		}
 		
 		//mightymax
-		depth = 0;
-		Best temp = minMax(columns);
-		cout << temp.bestMove << endl;
-		return temp.bestMove;	
-	}
-	else if(difficulty == EXPERT){
-		//put currstate on the stack alone
-		char tempState[COLUMNS][ROWS];
-		o.copyCurrState(tempState);
-		vector<char> rows;
-		vector< vector<char> > columns; 
-		for(int i=0; i<COLUMNS; i++){
-			for(int j=0; j<ROWS; j++){
-				rows.push_back(tempState[i][j]);
-			}
-			columns.push_back(rows);
-			rows.clear();
-		}
-		
-		//mightymax
-		Best temp = minMax(columns);
-		cout << temp.bestMove << endl;
-		return temp.bestMove;	
+		Move temp = minMax(columns);
+		//cout << temp.str << endl;
+		return temp.str;	
 	}
 	else{
 		error("go: Difficulty not valid\n");
 	}
 }
 
+//return ai color
 char AI::getColor(){
 	return playerColor;
 }
 
+//copy the game's current state
 void AI::copyCurrState(Othello &o){
 	o.copyCurrState(state);
 }
 
-Best AI::minMax(vector< vector<char> > state){
+//return the opposite color
+char AI::opposingPlayer(char player){
+	if(player == WHITE){
+		return BLACK;
+	}
+	else if(player == BLACK){
+		return WHITE;
+	}
+	else{
+		error("opposingPlayer: Invalid color.");
+	}
+}
+
+//return the number of moves
+int AI::numMoves(vector< vector<char> > state, char player){
+	int count = 0;
+	for(int i=0; i<COLUMNS; i++){
+		for(int j=0; j<ROWS; j++){
+			if(player == BLACK){
+				if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					count++;
+				}
+			}
+			if(player == WHITE){
+				if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
+					count++;
+				}
+			}
+		}
+	}
+	return count;
+}
+
+/*********************************************************MIN MAX FUNCTIONS******************************************/
+
+Move AI::minMax(vector< vector<char> > state){
 	depth = 0;
 	return maxMove(state);
 }
 
-Best AI::maxMove(vector< vector<char> > state){
+Move AI::maxMove(vector< vector<char> > state){
 	depth++;
-	//cout << depth << endl;
 	if(depth >= 3 || (numMoves(state, playerColor) == 0 && numMoves(state, opposingPlayer(playerColor)))){
-		Best temp;
+		Move temp;
 		temp.val = evaluate(state);
-		temp.bestMove = "";
+		temp.str = "";
 		depth--;
 		return temp;
 	}
 	else{
-		Best temp;
+		Move temp;
 		temp.val = -INFINITY;
-		temp.bestMove = "";
+		temp.str = "";
 		for(int i=0; i<COLUMNS; i++){
 			for(int j=0; j<ROWS; j++){
 				if(playerColor == BLACK){
 					if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 						vector< vector<char> > minState = testMove(state, i, j, playerColor);
-						Best moveVal = minMove(minState);
+						Move moveVal = minMove(minState);
 						if(moveVal.val > temp.val){
 							temp.val = moveVal.val;
 							stringstream ss;
 							ss << (char)(i+97) << (j+1);
-							temp.bestMove = ss.str();
+							temp.str = ss.str();
 						}
 					}
 				}
 				else{
 					if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 						vector< vector<char> > minState = testMove(state, i, j, playerColor);
-						Best moveVal = minMove(minState);
+						Move moveVal = minMove(minState);
 						if(moveVal.val > temp.val){
 							temp.val = moveVal.val;
 							stringstream ss;
 							ss << (char)(i+97) << (j+1);
-							temp.bestMove = ss.str();
+							temp.str = ss.str();
 						}
 					}
 				}
@@ -247,34 +277,34 @@ Best AI::maxMove(vector< vector<char> > state){
 	}
 }
 
-Best AI::minMove(vector< vector<char> > state){
+Move AI::minMove(vector< vector<char> > state){
 	depth++;
-	Best temp;
+	Move temp;
 	temp.val = INFINITY;
-	temp.bestMove = "";
+	temp.str = "";
 	for(int i=0; i<COLUMNS; i++){
 		for(int j=0; j<ROWS; j++){
 			if(playerColor == BLACK){
 				if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 					vector< vector<char> > maxState = testMove(state, i, j, opposingPlayer(playerColor));
-					Best moveVal = maxMove(maxState);
+					Move moveVal = maxMove(maxState);
 					if(moveVal.val < temp.val){
 						temp.val = moveVal.val;
 						stringstream ss;
 						ss << (char)(i+97) << (j+1);
-						temp.bestMove = ss.str();
+						temp.str = ss.str();
 					}
 				}
 			}
 			else{
 				if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
 					vector< vector<char> > maxState = testMove(state, i, j, opposingPlayer(playerColor));
-					Best moveVal = maxMove(maxState);
+					Move moveVal = maxMove(maxState);
 					if(moveVal.val < temp.val){
 						temp.val = moveVal.val;
 						stringstream ss;
 						ss << (char)(i+97) << (j+1);
-						temp.bestMove = ss.str();
+						temp.str = ss.str();
 					}
 				}
 			}
@@ -284,6 +314,7 @@ Best AI::minMove(vector< vector<char> > state){
 	return temp;
 }
 
+//This function is called by the minMax function when a leaf node is found
 int AI::evaluate(vector< vector<char> > state){
 	if(difficulty == MEDIUM){
 		int val = 0;
@@ -381,12 +412,12 @@ int AI::evaluate(vector< vector<char> > state){
 				}
 			}
 		}
-		
 		return val;
-	}
-	
+	}	
 }
 
+//this function returns the next state when the corresponding move is made
+//used by the minMax function
 vector <vector<char> > AI::testMove(vector <vector<char> > state, int column, int row, char player){
 	//create the next state
 	vector< vector <char> > newState = state;
@@ -504,41 +535,26 @@ vector <vector<char> > AI::testMove(vector <vector<char> > state, int column, in
 			newState[i][j] = evalSpace(newState, i, j);
 		}
 	}
-	
 	return newState;
-	
 }
 
-char AI::opposingPlayer(char player){
-	if(player == WHITE){
-		return BLACK;
-	}
-	else if(player == BLACK){
-		return WHITE;
-	}
-	else{
-		error("opposingPlayer: Invalid color.");
-	}
-}
+/*************************HELPER FUNCTIONS**********************************/
 
-int AI::numMoves(vector< vector<char> > state, char player){
-	int count = 0;
-	for(int i=0; i<COLUMNS; i++){
-		for(int j=0; j<ROWS; j++){
-			if(player == BLACK){
-				if(state[i][j] == POSSIBLE_BLACK_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-					count++;
-				}
-			}
-			if(player == WHITE){
-				if(state[i][j] == POSSIBLE_WHITE_MOVE || state[i][j] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-					count++;
-				}
-			}
-		}
-	}
-	return count;
-}
+/*
+These functions check an empty space's direction. It returns EMPTY if
+no pieces will be flipped in that direction, BLACK if white pieces could
+be flipped in that direction, or WHITE if black pieces could be flipped
+in that direction.
+*/
+
+/*
+Each of these functions compares its next space with the current space
+while the next space is not off the board. If the next space is the
+opposite color of the current space, then it returns the next space.
+If the next space is not a black or white piece, then it returns EMPTY,
+meaning nothing would happen in that direction, regardless of which player
+made the move.
+*/
 
 char AI::left(vector< vector<char> > state, int column, int row){
 	int nextSpace, currSpace;
@@ -795,63 +811,4 @@ char AI::evalSpace(vector< vector<char> > state, int column, int row){
 	else{
 		return EMPTY;
 	}
-}
-
-void AI::print(vector< vector<char> > state, char player){
-	//first row
-	cout << "\n";
-	cout << " |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__|" << endl;
-	if(player == BLACK){
-		for(int i=0; i<ROWS; i++){
-		cout << i+1 << "|";
-			for(int j=0; j<COLUMNS; j++){
-				char piece = '_'; //default as a space (no pieces present)
-				if(state[j][i] == BLACK){
-					piece = '@';
-				}
-				else if(state[j][i] == WHITE){
-					piece = 'O';
-				}
-				else if(state[j][i] == POSSIBLE_BLACK_MOVE){//mark a square as a potential move
-					piece = 'X';
-				}
-				else if(state[j][i] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-					piece = 'X';
-				}
-				else
-					piece = '_';
-				cout << "__" << piece << "__|";
-			}
-		cout << endl;
-		}
-		cout << endl;
-	}
-	
-	else if(player == WHITE){	
-		for(int i=0; i<ROWS; i++){
-		cout << i+1 << "|";
-			for(int j=0; j<COLUMNS; j++){
-				char piece = '_';
-				if(state[j][i] == BLACK){
-					piece = '@';
-				}
-				else if(state[j][i] == WHITE){
-					piece = 'O';
-				}
-				else if(state[j][i] == POSSIBLE_WHITE_MOVE){//mark a square as a potential move
-					piece = 'X';
-				}
-				else if(state[j][i] == POSSIBLE_BLACK_OR_WHITE_MOVE){
-					piece = 'X';
-				}
-				else
-					piece = '_';
-				cout << "__" << piece << "__|";
-			}
-		cout << endl;
-		}
-		cout << endl;
-	}
-	else 
-		error("print: invalid player passed");
 }
