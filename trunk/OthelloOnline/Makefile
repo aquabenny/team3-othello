@@ -1,7 +1,7 @@
 all:
 	# For testing, form is blackWhite AI
 	g++ main.cpp -o main
-	g++ server.cpp -o server
+	g++ server.cpp -o server -lsocket -lresolv
 	g++ easyEasy.cpp -o easyEasyTest
 	g++ easyMedium.cpp -o easyMedTest
 	g++ easyHard.cpp -o easyHardTest
