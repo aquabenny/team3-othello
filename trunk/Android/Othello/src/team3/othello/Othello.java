@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 //import android.graphics.*; //Import standard Android graphics library 
 
-//import team3.othello.AI; //Import AI code for difficulty settings
+import team3.othello.AI; //Import AI code for difficulty settings
 
 public class Othello extends Activity {
 	/** Called when the activity is first created. */
@@ -30,7 +30,8 @@ public class Othello extends Activity {
      *                     GAME USER INTERFACE
      * ***************************************************************
      */
-	
+	//make a new radio button
+	//set ActionListener, onClick -> start Activity(this.Othello, GameBoard.java 
 	//buttons for each possible square on the board
 	
 	

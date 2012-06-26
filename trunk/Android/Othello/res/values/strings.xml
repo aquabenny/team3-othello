@@ -16,5 +16,6 @@
 	<string name="start_label">BEGIN</string>
 	<string name="quit_label">QUIT</string>
 	<string name="hint_label">HINT</string>
+	<string name="about_content">This version of Othello has been created by Dylan McDougall, Sam Stewart, and Stephen Ten Eyck</string>
     
 </resources>
