@@ -4,10 +4,10 @@ import team3.othello.R;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class GameBoard extends Activity {
-
+public class About extends Activity{
+	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gameboard);
+		setContentView(R.layout.about);
 	}
 }

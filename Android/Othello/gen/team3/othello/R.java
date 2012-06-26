@@ -11,7 +11,9 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int ForestGreen=0x7f040002;
         public static final int background=0x7f040000;
+        public static final int transparent=0x7f040001;
     }
     public static final class drawable {
         public static final int board=0x7f020000;
@@ -19,20 +21,27 @@ public final class R {
         public static final int loading_r1=0x7f020002;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f060000;
-        public static final int colorChoose=0x7f060005;
-        public static final int colorChooseBlk=0x7f060007;
-        public static final int colorChooseWhite=0x7f060006;
-        public static final int diffChoose=0x7f060001;
-        public static final int diffChooseEasy=0x7f060002;
-        public static final int diffChooseHard=0x7f060004;
-        public static final int diffChooseMed=0x7f060003;
-        public static final int startButton=0x7f060008;
+        public static final int LinearLayout1=0x7f060002;
+        public static final int about_content=0x7f060001;
+        public static final int about_title=0x7f060000;
+        public static final int colorChoose=0x7f060008;
+        public static final int diffChoose=0x7f060003;
+        public static final int radioBlack=0x7f06000a;
+        public static final int radioEasy=0x7f060005;
+        public static final int radioGroup1=0x7f060004;
+        public static final int radioGroup2=0x7f060009;
+        public static final int radioHard=0x7f060007;
+        public static final int radioMed=0x7f060006;
+        public static final int radioWhite=0x7f06000b;
+        public static final int startButton=0x7f06000c;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int about=0x7f030000;
+        public static final int gameboard=0x7f030001;
+        public static final int main=0x7f030002;
     }
     public static final class string {
+        public static final int about_content=0x7f05000f;
         public static final int about_label=0x7f050003;
         public static final int app_name=0x7f050001;
         public static final int choose_color=0x7f050009;
