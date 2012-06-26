@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import android.R;
+//import android.R;
+import team3.othello.R;
 import android.app.Activity;
 import android.os.Bundle;
-//import team3.othello.AI;
+//import android.graphics.*; //Import standard Android graphics library 
 
-//This is a rough, work in progress conversion from C++ to Java of Project2
+//import team3.othello.AI; //Import AI code for difficulty settings
 
 public class Othello extends Activity {
 	/** Called when the activity is first created. */
@@ -29,6 +30,10 @@ public class Othello extends Activity {
      *                     GAME USER INTERFACE
      * ***************************************************************
      */
+	
+	//buttons for each possible square on the board
+	
+	
 	
 	/**
      * ***************************************************************
