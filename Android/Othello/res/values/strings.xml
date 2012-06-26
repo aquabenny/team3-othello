@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Welcome to Othello!</string>
+    <string name="hello">Welcome to the best Othello game eva!</string>
     <string name="app_name">Othello-315</string>
-
+    <string name="new_game_label">New Game</string>
+    <string name="about_label">About</string>
+    <string name="exit_label">Exit</string>
+    <string name="choose_diff">Choose a Difficulty:</string>
+    <string name="diff_easy">Easy</string>
+    <string name="diff_med">Medium</string>
+    <string name="diff_hard">Hard</string>
+    <string name="choose_color">Choose a Color:</string>
+    <string name="color_blk">Black</string>
+    <string name="color_white">White</string>
+	<string name="start_label">BEGIN</string>
+	<string name="quit_label">QUIT</string>
+	<string name="hint_label">HINT</string>
+    
 </resources>

@@ -1,12 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal"
+    android:background="@color/background" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical" >
 
+	        <TextView
+	            android:layout_width="321dp"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:textSize="24.5dip"
+	            android:text="@string/hello" />
+
+	        <TextView
+	            android:id="@+id/diffChoose"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/choose_diff"
+	            android:textSize="20dp" />
+
+	        <RadioButton
+	            android:id="@+id/diffChooseEasy"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/diff_easy" />
+
+	        <RadioButton
+	            android:id="@+id/diffChooseMed"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/diff_med" />
+
+	        <RadioButton
+	            android:id="@+id/diffChooseHard"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/diff_hard" />
+
+	        <TextView
+	            android:id="@+id/colorChoose"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:text="@string/choose_color"
+	            android:textSize="20dp" />
+
+	        <RadioButton
+	            android:id="@+id/colorChooseWhite"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/color_white" />
+
+	        <RadioButton
+	            android:id="@+id/colorChooseBlk"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/color_blk" />
+
+	        <Button
+	            android:id="@+id/startButton"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/start_label" />
+
+	    </LinearLayout>
 </LinearLayout>
