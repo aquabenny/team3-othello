@@ -1,0 +1,17 @@
+<results count="3">
+	<result>
+		<id>1</id>
+		<name>Choe</name>
+		<score>64</score>
+	</result>
+	<result>
+		<id>2</id>
+		<name>Team3</name>
+		<score>52</score>
+	</result>
+	<result>
+		<id>3</id>
+		<name>Aalap</name>
+		<score>0</score>
+	</result>
+</results>
