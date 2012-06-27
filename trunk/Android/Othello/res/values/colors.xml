@@ -3,4 +3,5 @@
     <color name="background">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="ForestGreen">#006400</color>
+    <color name="gridLine">#FFFFFF</color>
 </resources>
