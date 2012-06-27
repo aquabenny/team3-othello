@@ -49,9 +49,9 @@ public class Othello {//extends Activity {
 	public int G = 6; 
 	public int H = 7;
 	public int MAX_STATES = 64;
-	public int EASY = 0;
-	public int MEDIUM = 1;
-	public int HARD = 2;
+	public static char EASY = 'A';
+	public static char MEDIUM = 'B';
+	public static char HARD = 'C';
 	public int INFINITY = 999999;
 	
 	/**
@@ -137,7 +137,7 @@ public class Othello {//extends Activity {
 		}
 		return count;
 	}
-	
+/*	
 	private void print(char[][] state){
 	
 		//We want to loop through the state arrays to check for pieces
@@ -163,8 +163,8 @@ public class Othello {//extends Activity {
 		}
 		System.out.println();
 	}
-	
-	private void print(char[][] state, char player){
+*/	
+	public void print(char[][] state, char player){
 	
 		System.out.println("\n");
 		System.out.println(" |__a__|__b__|__c__|__d__|__e__|__f__|__g__|__h__| ");
@@ -258,6 +258,7 @@ public class Othello {//extends Activity {
 		
 		if(player == WHITE){
 			if(states[currState][column][row] != POSSIBLE_WHITE_MOVE && states[currState][column][row] != POSSIBLE_BLACK_OR_WHITE_MOVE){
+				//System.out.println("bad");
 				return false;
 			}
 		}
@@ -265,6 +266,7 @@ public class Othello {//extends Activity {
 		if(player == BLACK){
 			if(states[currState][column][row] != POSSIBLE_BLACK_MOVE 
 			&& states[currState][column][row] != POSSIBLE_BLACK_OR_WHITE_MOVE){
+				System.out.println("bad");
 				return false;
 			}
 		}
@@ -746,6 +748,10 @@ public class Othello {//extends Activity {
 	*/
 	
 	public int parse(String input, char player) throws IOException{
+		
+		//System.out.println(input);
+		//System.out.println(player);
+		
 		//empty input
 		if(input.length() == 0){
 			System.out.println("No input found.\n");
@@ -781,7 +787,7 @@ public class Othello {//extends Activity {
 		//display on
 		else if(input.equals("DISPLAY_ON")){
 			display = ON;
-			print(states[currState]);
+			print(states[currState], player);
 			return 0;
 		}
 		
@@ -857,6 +863,8 @@ public class Othello {//extends Activity {
 					//convert column and row to ints
 					int tempColumn = (int)(input.charAt(0)) - 97;								//ascii conversion
 					int tempRow = (int)(input.charAt(1)) - 48;									//ascii conversion
+					//System.out.println(tempColumn);
+					//System.out.println(tempRow);
 					if(move(tempColumn, tempRow-1, player)){
 						//valid move. check if game is over
 						if(endGame()){
@@ -901,7 +909,7 @@ public class Othello {//extends Activity {
 					}
 				}
 			}
-			System.out.println(input);
+			//System.out.println(input);
 			System.out.println("Invalid move. Type \"SHOW_NEXT_POS\" to see possible moves.\n");
 			return 0;																		//invalid move
 		}
@@ -922,6 +930,10 @@ public class Othello {//extends Activity {
 	public void copyCurrState(char[][] state){
 		System.arraycopy( states[currState], 0, state, 0, states[currState].length);
 	}
+	
+	public char[][] getState(){
+		return states[currState];
+	}
 	/**
 	*******************************************************
 	*                  MAIN FUNCTION
@@ -929,23 +941,76 @@ public class Othello {//extends Activity {
 	*/
 	public static void main(String [] args) throws IOException {
 		Othello o = new Othello();
+		
+		AI ai = new AI();
+		
 		String input;
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int rc = 0;
 		
 		System.out.println("Welcome to the best Othello game eva!\n" + "Enter a command:");
+		
+		//set difficulty
+		boolean goAgain = false;
+		do{
+			System.out.println("\nEnter a difficulty: <EASY/MEDIUM/HARD>");
+			input = bufferedReader.readLine();
+			if (input.equals("EASY")){
+				ai.setDifficulty(EASY);
+			}
+			else if(input.equals("MEDIUM")){
+				ai.setDifficulty(MEDIUM);
+			}
+			else if(input.equals("HARD")){
+				ai.setDifficulty(HARD);
+			}
+			else{
+				System.out.println("Invalid difficulty");
+				goAgain = true;
+			}
+		}while(goAgain);
+		
+		//set color
+		do{
+			System.out.println("\nEnter your color <BLACK/WHITE>");
+			input = bufferedReader.readLine();
+			if (input.equals("BLACK")){
+				ai.setPlayerColor(WHITE);
+			}
+			else if(input.equals("WHITE")){
+				ai.setPlayerColor(BLACK);
+			}
+			else{
+				System.out.println("Invalid color");
+				goAgain = true;
+			}
+		}while(goAgain);
+		
+		//play
 		while(rc != 2){
 			do{
-				System.out.print("\nBLACK>");
-				input = bufferedReader.readLine();
-				rc = o.parse(input, BLACK);
+				if (ai.getColor() == BLACK){
+					System.out.println("\nBLACK>");
+					rc = o.parse(ai.go(o), BLACK);
+				}
+				else{
+					System.out.print("\nBLACK>");
+					input = bufferedReader.readLine();
+					rc = o.parse(input, BLACK);
+				}
 			}while(rc == 0);
-			
+						
 			if(rc != 2){
 				do{
-					System.out.print("\nWHITE>");
-					input = bufferedReader.readLine();
-					rc = o.parse(input, WHITE);
+					if (ai.getColor() == WHITE){
+						System.out.println("\nWHITE>");
+						rc = o.parse(ai.go(o), WHITE);
+					}
+					else{
+						System.out.print("\nWHITE>");
+						input = bufferedReader.readLine();
+						rc = o.parse(input, WHITE);
+					}
 				}while(rc == 0);
 			}
 		}
