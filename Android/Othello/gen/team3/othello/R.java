@@ -13,6 +13,7 @@ public final class R {
     public static final class color {
         public static final int ForestGreen=0x7f040002;
         public static final int background=0x7f040000;
+        public static final int gridLine=0x7f040003;
         public static final int transparent=0x7f040001;
     }
     public static final class drawable {
@@ -38,7 +39,7 @@ public final class R {
     }
     public static final class layout {
         public static final int about=0x7f030000;
-        public static final int gameboard=0x7f030001;
+        public static final int game=0x7f030001;
         public static final int main=0x7f030002;
     }
     public static final class string {

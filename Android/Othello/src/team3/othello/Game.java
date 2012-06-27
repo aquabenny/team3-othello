@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.graphics.*;
 
-public class GameBoard extends Activity implements OnClickListener {
+public class Game extends Activity implements OnClickListener {
 
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gameboard);
+		setContentView(R.layout.game);
 		
 		//Going to have to define buttons here
 	}
@@ -30,4 +30,5 @@ public class GameBoard extends Activity implements OnClickListener {
 			break;
 		}*/
 	}
+
 }
