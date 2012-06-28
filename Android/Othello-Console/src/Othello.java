@@ -225,7 +225,6 @@ public class Othello {//extends Activity {
 	
 	private boolean undo(){
 		if(currState <= 1){
-			System.out.println("undo: Can't undo, no more previous states.\n");
 			return false;
 		}
 		else{
@@ -235,12 +234,12 @@ public class Othello {//extends Activity {
 	}
 	
 	private boolean redo(){
-		if(currState <= 1){
-			System.out.println("undo: Can't undo, no more previous states.\n");
+		if(currState >= numStates-2){
+			System.out.println("redo: Can't redo, no more future states.\n");
 			return false;
 		}
 		else{
-			currState -= 2;
+			currState += 2;
 			return true;
 		}
 	}
@@ -275,7 +274,13 @@ public class Othello {//extends Activity {
 		//Go to the next state and update the states
 		currState++;
 		numStates = currState + 1;
-		System.arraycopy( states[currState-1], 0, states[currState], 0, states[currState].length);
+		//System.arraycopy( states[currState-1], 0, states[currState], 0, states[currState].length);
+		
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				states[currState][i][j] = states[currState-1][i][j];
+			}
+		}
 		
 		//Check each direction, flip opposing pieces
 		int tempColumn;
@@ -729,7 +734,7 @@ public class Othello {//extends Activity {
 		display = ON;
 		numStates = 1;
 		
-		print(states[currState], BLACK);
+		//print(states[currState], BLACK);
 	}
 	
 	public boolean endGame(){
@@ -829,10 +834,11 @@ public class Othello {//extends Activity {
 		
 		//undo
 		else if(input.equals("UNDO")){
-			if(undo()){		//undo didn't work
+			if(!undo()){		//undo didn't work
 				return 0;
 			}
 			if(display){
+				//System.out.println("inside display");
 				print(states[currState], player);
 			}
 			return 0;
@@ -840,7 +846,7 @@ public class Othello {//extends Activity {
 		
 		//redo
 		else if(input.equals("REDO")){
-			if(redo()){		//redo didn't work
+			if(!redo()){		//redo didn't work
 				return 0;
 			}
 			if(display){
@@ -957,12 +963,15 @@ public class Othello {//extends Activity {
 			input = bufferedReader.readLine();
 			if (input.equals("EASY")){
 				ai.setDifficulty(EASY);
+				goAgain = false;
 			}
 			else if(input.equals("MEDIUM")){
 				ai.setDifficulty(MEDIUM);
+				goAgain = false;
 			}
 			else if(input.equals("HARD")){
 				ai.setDifficulty(HARD);
+				goAgain = false;
 			}
 			else{
 				System.out.println("Invalid difficulty");
@@ -976,9 +985,11 @@ public class Othello {//extends Activity {
 			input = bufferedReader.readLine();
 			if (input.equals("BLACK")){
 				ai.setPlayerColor(WHITE);
+				goAgain = false;
 			}
 			else if(input.equals("WHITE")){
 				ai.setPlayerColor(BLACK);
+				goAgain = false;
 			}
 			else{
 				System.out.println("Invalid color");
@@ -987,6 +998,7 @@ public class Othello {//extends Activity {
 		}while(goAgain);
 		
 		//play
+		o.print(o.getState(), BLACK);
 		while(rc != 2){
 			do{
 				if (ai.getColor() == BLACK){

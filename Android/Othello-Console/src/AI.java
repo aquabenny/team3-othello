@@ -3,10 +3,10 @@
 import android.app.Activity;
 import android.os.Bundle;
 */
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
 import java.util.Random;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 
 public class AI extends Othello{
@@ -224,8 +224,12 @@ public class AI extends Othello{
 	
 	private char[][] testMove(char[][] state, int column, int row, char player){
 		//create the next state
-		char[][] newState = state;
-
+		char[][] newState = new char[COLUMNS][ROWS];
+		for(int i=0; i<COLUMNS; i++){
+			for(int j=0; j<ROWS; j++){
+				newState[i][j] = state[i][j];
+			}
+		}	
 		//check each direction and flip oposing pieces
 		int tempColumn;										//the next column to look at
 		int tempRow;										//the next row to look at
