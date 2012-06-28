@@ -39,71 +39,58 @@ public class Othello extends Activity implements OnClickListener {
        View seeHighScore = findViewById(R.id.highScore);
        seeHighScore.setOnClickListener(this);
        
-       /**
-       //Read info from Radio buttons
-       //Declare radio buttons
-       RadioGroup difficulty;
-       difficulty = (RadioGroup) findViewById(R.id.diffGroup);
-       //Get selected radio button
-       int selectedDiff = difficulty.getCheckedRadioButtonId();
-       RadioButton selected = ((RadioButton)findViewById(selectedDiff));
-       String diffSelected = selected.getText().toString();
-       String message = "Selected diff: ";
-       
-       Log.d(message, diffSelected);
-       
        
        /*
         * Going to change tomorrow to follow this:
      	* http://android-er.blogspot.com/2009/11/radiogroup-and-radiobutton.html
      	* http://portiaplante.com/android/lectures/Android%20-%20Lecture%2014%20-%20Forms%203%20More%20Form%20Controls.pdf
-        
-       
-       
-       RadioGroup colorChoice;
-       colorChoice = (RadioGroup) findViewById(R.id.colorGroup);
-       //Get selected Radio Button
-       int selectedColor = colorChoice.getCheckedRadioButtonId();
-       RadioButton colorSelect = ((RadioButton)findViewById(selectedColor));
-       String colorSelected = colorSelect.getText().toString();
-       String message2 = "Selected color: ";
-       Log.d(message2, colorSelected);
-       */
+     	* */
+
     }
 	
 	public void onClick(View v){
 		//Actions for button clicks
 		switch(v.getId()){
-		case R.id.startButton:
-			//Get Difficulty Data
+		case R.id.startButton:{
+			//Get Difficulty Data from radio buttons
 			RadioGroup diff;
 			RadioGroup color;
 			diff = (RadioGroup) findViewById(R.id.diffGroup);
 			int selectDiff = diff.getCheckedRadioButtonId();
 			RadioButton diffSelected = ((RadioButton)findViewById(selectDiff));
 			String difficulty = diffSelected.getText().toString();
-			String tag = "Selection: ";
-			Log.d(tag, difficulty);
+			String tag = "Diff Selection: ";
+			Log.d(tag, difficulty); // Testing, letting debugger know what option we chose
 			
 			//Get Color Data
 			color = (RadioGroup) findViewById(R.id.colorGroup);
 			int selectColor = color.getCheckedRadioButtonId();
 			RadioButton colorSelect = ((RadioButton)findViewById(selectColor));
 			String colorSelected = colorSelect.getText().toString();
-			Log.d(tag, colorSelected);
+			String tag2 = "Color Selected: ";
+			Log.d(tag2, colorSelected); // Testing, letting debugger know what option we chose
 			
-			//Start Activity
+			//Start the Game Activity
 			Intent i = new Intent(this, Game.class);
 			startActivity(i);
 			break;
-		case R.id.about_button:
+			}
+		case R.id.about_button:{
+			String tag = "Action: ";
+			String abouts = "About";
 			Intent j = new Intent(this, About.class);
 			startActivity(j);
+			Log.d(tag, abouts);
 			break;
-		case R.id.highScore:
-			//Intent k = new Intent(this, Scores.class);
-			//startActivity(k);
+			}
+		case R.id.highScore:{
+			String tagger = "Action: ";
+			String hs = "View High Scores";
+			Intent k = new Intent(this, HighScores.class);
+			startActivity(k);
+			Log.d(tagger, hs);
 			break;
+			}
 		}
 	}
 	
