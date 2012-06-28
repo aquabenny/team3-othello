@@ -30,7 +30,13 @@
             android:label="@string/about_label"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
-        "
+        
+        <activity
+            android:name=".HighScores"
+            android:label="@string/view_button"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        
     </application>
 
 </manifest>
