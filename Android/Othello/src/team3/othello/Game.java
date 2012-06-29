@@ -70,7 +70,7 @@ public class Game extends Activity implements OnClickListener {
 	//When a button is clicked, pass instructions
 	public void onClick(View v){
 		String buttonHit = "Action: ";
-		String moveMade = "Move: ";
+		//String moveMade = "Move: ";
 		switch(v.getId()){
 		case R.id.hint:{
 			String needAHint = "SHOW_NEXT_POS";

@@ -78,7 +78,7 @@ public class Mechanics {//extends Activity {
 		}
 	}
 	
-	private int numPieces(char[][] state, char player){
+	public int numPieces(char[][] state, char player){
 		if(player == WHITE){
 			int whitePieces = 0;
 			for(int i=0; i < ROWS; i++){
@@ -105,7 +105,7 @@ public class Mechanics {//extends Activity {
 			return 0;
 	}
 	
-	private int score(char[][] state, char player){
+	public int score(char[][] state, char player){
 		if(player == WHITE){
 			return numPieces(state, WHITE) - numPieces(state, BLACK);
 		}
