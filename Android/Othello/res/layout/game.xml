@@ -10,13 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left|right" >
-
+
         <TextView
             android:id="@+id/difficulty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.49"
-            android:text="@string/diff_med"
             android:textSize="15dp" />
 
         <Button

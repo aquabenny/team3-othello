@@ -21,6 +21,7 @@
 	<string name="score_title">High Scores:</string>
 	<string name="undo_label">UNDO</string>
 	<string name="redo_label">REDO</string>
+	<string name="error_title">ERRRRRROOOOORRRR!!!</string>
 	
 	<!-- <string name="a1">a1</string>	<string name="a2">a2</string>	<string name="a3">a3</string>
 	<string name="a4">a4</string>	<string name="a5">a5</string>	<string name="a6">a6</string>
