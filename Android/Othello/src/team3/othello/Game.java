@@ -31,7 +31,7 @@ public class Game extends Activity implements OnClickListener {
 		
 		String tag = "IntentDiff: ";
 		String tag2 = "IntentColor: ";
-		//Get Difficulty and player color
+		//Get Difficulty and player color from first screen
 		String aiLevel = getIntent().getStringExtra("Difficulty");
 		String colorChoice = getIntent().getStringExtra("Color");
 		Log.d(tag, aiLevel);
@@ -39,6 +39,7 @@ public class Game extends Activity implements OnClickListener {
 		TextView diffy = (TextView)findViewById(R.id.difficulty);
 		diffy.setText(aiLevel);
 		
+		//Set up button listeners
 		View hintButton = findViewById(R.id.hint);
 		hintButton.setOnClickListener(this);
 		View undoButton = findViewById(R.id.undo);
@@ -48,6 +49,23 @@ public class Game extends Activity implements OnClickListener {
 		View quitButton = findViewById(R.id.quit);
 		quitButton.setOnClickListener(this);
 		
+		//Set AI difficulty
+		if(aiLevel.equals("Easy")){
+			Draw2d.ai.setDifficulty(m.EASY);
+		}
+		if(aiLevel.equals("Medium")){
+			Draw2d.ai.setDifficulty(m.MEDIUM);
+		}
+		if(aiLevel.equals("Hard")){
+			Draw2d.ai.setDifficulty(m.HARD);
+		}
+		//Set AI color
+		if(colorChoice.equals("White")){
+			Draw2d.ai.setPlayerColor(m.BLACK);
+		}
+		if(colorChoice.equals("Black")){
+			Draw2d.ai.setPlayerColor(m.WHITE);
+		}
 		
 		ll = (LinearLayout) findViewById(R.id.gameBoard);
 		m = new Mechanics();
