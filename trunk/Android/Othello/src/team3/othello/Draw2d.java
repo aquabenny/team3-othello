@@ -17,6 +17,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 	private static final String TAG = DrawBoard.class.getSimpleName();
 	private DrawBoard thread;
 	private char player;
+	boolean showNextPos = false;
 	
 	Mechanics m;
 	public Draw2d(Context context, Mechanics m){
@@ -33,6 +34,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			// delegating event handling to the piece
 			try {
+				showNextPos = false;
 				int rc = 0;
 				if((int)event.getX() >= 5 && (int)event.getX() <= 60){	//column a
 					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
@@ -671,16 +673,20 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 					paint.setColor(Color.WHITE);
 					c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
 				}
-				if((m.getState()[i][j] == m.POSSIBLE_BLACK_MOVE ||
-						m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.BLACK){
-					paint.setARGB(150, 150, 150, 150);
-					c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
-				}
-				if((m.getState()[i][j] == m.POSSIBLE_WHITE_MOVE ||
-						m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.WHITE){
-					paint.setARGB(150, 150, 150, 150);
-					c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
-				}
+				
+				if(showNextPos){
+					if((m.getState()[i][j] == m.POSSIBLE_BLACK_MOVE ||
+							m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.BLACK){
+						paint.setARGB(150, 150, 150, 150);
+						c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
+					}
+					if((m.getState()[i][j] == m.POSSIBLE_WHITE_MOVE ||
+							m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.WHITE){
+						paint.setARGB(150, 150, 150, 150);
+						c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
+					}
+					
+				}	
 			}
 			
 		}
@@ -751,4 +757,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 		return false;
 	}
 	
+	public void showHint(){
+		showNextPos = true;
+	}
 }

@@ -71,6 +71,7 @@ public class Game extends Activity implements OnClickListener {
 			String needAHint = "SHOW_NEXT_POS";
 			Log.d(buttonHit, needAHint);
 			//Place Xs or something on possible moves
+			pcc.showHint();
 			break;
 			}
 		case R.id.undo:{
