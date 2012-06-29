@@ -41,7 +41,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -50,7 +50,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -59,7 +59,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -68,7 +68,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -77,7 +77,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -86,7 +86,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -95,7 +95,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -104,7 +104,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -116,7 +116,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -125,7 +125,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -134,7 +134,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -143,7 +143,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -152,7 +152,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -161,7 +161,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -170,7 +170,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -179,7 +179,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -191,7 +191,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -200,7 +200,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -209,7 +209,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -218,7 +218,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -227,7 +227,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -236,7 +236,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -245,7 +245,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -254,7 +254,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -266,7 +266,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -275,7 +275,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -284,7 +284,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -293,7 +293,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -302,7 +302,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -311,7 +311,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -320,7 +320,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -329,7 +329,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -341,7 +341,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -350,7 +350,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -359,7 +359,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -368,7 +368,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -377,7 +377,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -386,7 +386,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -395,7 +395,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -404,7 +404,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -416,7 +416,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -425,7 +425,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -434,7 +434,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -443,7 +443,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -452,7 +452,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -461,7 +461,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -470,7 +470,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -479,7 +479,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -491,7 +491,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -500,7 +500,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -509,7 +509,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -518,7 +518,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -527,7 +527,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -536,7 +536,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -545,7 +545,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -554,7 +554,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -566,7 +566,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
@@ -575,7 +575,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
@@ -584,7 +584,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
@@ -593,7 +593,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
@@ -602,7 +602,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
@@ -611,7 +611,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
@@ -620,7 +620,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
@@ -629,7 +629,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							player = m.opposingPlayer(player);
 						}
 						else if(rc == 2){
-							//do endgame stuff
+							endGame();
 						}
 					}
 				}
@@ -671,7 +671,18 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 					paint.setColor(Color.WHITE);
 					c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
 				}
+				if((m.getState()[i][j] == m.POSSIBLE_BLACK_MOVE ||
+						m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.BLACK){
+					paint.setARGB(150, 150, 150, 150);
+					c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
+				}
+				if((m.getState()[i][j] == m.POSSIBLE_WHITE_MOVE ||
+						m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.WHITE){
+					paint.setARGB(150, 150, 150, 150);
+					c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
+				}
 			}
+			
 		}
 		
 		//c.drawCircle(80, 20, 20, paint);
@@ -707,4 +718,37 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 		}
 		//Log.d(TAG, "Thread was shut down cleanly");
 	}
+	private void endGame(){
+		thread.setRunning(false);
+	}
+	
+	public void surfaceDestroyed() {
+		// TODO Auto-generated method stub
+		boolean retry = true;
+		while (retry) {
+			try {
+				endGame();
+				thread.join();
+				retry = false;
+			} catch (InterruptedException e) {
+				// try again shutting down the thread
+			}
+		}
+		//Log.d(TAG, "Thread was shut down cleanly");
+	}
+	
+	public boolean undo() throws IOException{
+		if(m.parse("UNDO", player) == 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean redo() throws IOException{
+		if(m.parse("REDO", player) == 0){
+			return true;
+		}
+		return false;
+	}
+	
 }

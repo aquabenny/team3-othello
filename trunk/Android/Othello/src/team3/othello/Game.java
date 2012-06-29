@@ -1,23 +1,26 @@
 package team3.othello;
 
+import java.io.IOException;
+
 import team3.mechanicsAI.Mechanics;
 import team3.othello.R;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.graphics.*;
+import android.content.Intent;
+import android.widget.TextView;
 
 public class Game extends Activity implements OnClickListener {
 	
 	LinearLayout ll;
-	Draw2d c;
+	//Draw2d c;
 	Mechanics m;
+	Draw2d pcc;
 	
 	boolean isError = true;
 	
@@ -45,23 +48,17 @@ public class Game extends Activity implements OnClickListener {
 		View quitButton = findViewById(R.id.quit);
 		quitButton.setOnClickListener(this);
 		
+		
 		ll = (LinearLayout) findViewById(R.id.gameBoard);
 		m = new Mechanics();
-		c = new Draw2d(this, m);
+		//c = new Draw2d(this, m);
 		
-		Draw2d pcc = new Draw2d(this, m);
+		/*Draw2d*/ pcc = new Draw2d(this, m);
 		Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(result);
 		pcc.draw(canvas);
 		pcc.setLayoutParams(new LayoutParams(500, 500));
 		ll.addView(pcc);
-		
-		/*
-		Paint paint = new Paint();
-		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(Color.BLACK);
-		canvas.drawCircle(100, 100, 25, paint);
-		*/
 	}
 	
 	
@@ -79,28 +76,39 @@ public class Game extends Activity implements OnClickListener {
 		case R.id.undo:{
 			String oops = "UNDO";
 			Log.d(buttonHit, oops);
-			//Undo move
-			if(isError == true){
-				Intent i = new Intent(this, Alerts.class);
-				i.putExtra("Error", "undo");
-				startActivity(i);
+			try {
+				if(pcc.undo() == false){
+					Intent i = new Intent(this, Alerts.class);
+					i.putExtra("Error", "undo");
+					startActivity(i);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			//Undo move
 			break;
 			}
 		case R.id.redo:{
 			String ctrlY = "REDO";
 			Log.d(buttonHit, ctrlY);
-			//Redo
-			if(isError == true){
-				Intent i = new Intent(this, Alerts.class);
-				i.putExtra("Error", "redo");
-				startActivity(i);
+			try {
+				if(pcc.redo() == false){
+					Intent i = new Intent(this, Alerts.class);
+					i.putExtra("Error", "redo");
+					startActivity(i);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			//Redo
 			break;
 			}
 		case R.id.quit:{
 			String quitter = "Quit Game";
 			Log.d(buttonHit, quitter);
+			pcc.surfaceDestroyed();
 			finish();
 			break;
 			}	
