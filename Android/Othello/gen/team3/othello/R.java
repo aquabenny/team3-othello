@@ -31,6 +31,7 @@ public final class R {
         public static final int diffChoose=0x7f06000c;
         public static final int diffGroup=0x7f06000d;
         public static final int difficulty=0x7f060002;
+        public static final int gameBoard=0x7f060004;
         public static final int highScore=0x7f060017;
         public static final int hint=0x7f060003;
         public static final int quit=0x7f060007;
@@ -44,7 +45,6 @@ public final class R {
         public static final int textView1=0x7f060009;
         public static final int top_bar=0x7f060001;
         public static final int undo=0x7f060006;
-        public static final int view1=0x7f060004;
         public static final int xml_scores=0x7f06000a;
     }
     public static final class layout {
