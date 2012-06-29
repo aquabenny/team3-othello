@@ -33,6 +33,8 @@ public class Game extends Activity implements OnClickListener {
 		String colorChoice = getIntent().getStringExtra("Color");
 		Log.d(tag, aiLevel);
 		Log.d(tag2, colorChoice);
+		TextView diffy = (TextView)findViewById(R.id.difficulty);
+		diffy.setText(aiLevel);
 		
 		View hintButton = findViewById(R.id.hint);
 		hintButton.setOnClickListener(this);
