@@ -15,10 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-//import android.graphics.*; //Import standard Android graphics library 
-
-//import team3.othello.AI; //Import AI code for difficulty settings
-
 public class Othello extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
     /**
@@ -38,14 +34,7 @@ public class Othello extends Activity implements OnClickListener {
        aboutUs.setOnClickListener(this);
        View seeHighScore = findViewById(R.id.highScore);
        seeHighScore.setOnClickListener(this);
-       
-       
-       /*
-        * Going to change tomorrow to follow this:
-     	* http://android-er.blogspot.com/2009/11/radiogroup-and-radiobutton.html
-     	* http://portiaplante.com/android/lectures/Android%20-%20Lecture%2014%20-%20Forms%203%20More%20Form%20Controls.pdf
-     	* */
-
+ 
     }
 	
 	public void onClick(View v){

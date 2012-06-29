@@ -23,6 +23,10 @@ import android.widget.Toast;
 
 public class HighScores extends Activity {
 	
+	public String[] strArray = new String[12];
+	int index = 0;
+	//strArray = new String[12];
+	String str = ""; 
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -32,6 +36,8 @@ public class HighScores extends Activity {
 		
 		parse();
 		
+		myXML.setText(str);
+		/*
 		//From Lab 3 - Read in the XML file and display it in TextView
 		try{
 		File myFile = new File("/sdcard/example.xml");
@@ -49,7 +55,7 @@ public class HighScores extends Activity {
 		}
 		catch(Exception e){
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-		}	
+		}	*/
 	}
 	
 	public void parse(){
@@ -89,17 +95,25 @@ public class HighScores extends Activity {
 					//Log.d("entries:", input);
 					
 					if(isID){
-						String out = "Place: " + new String(ch, begin, length);
+						String out = "Place: " + new String(ch, begin, length) + " ";
+						strArray[index] = out;
+						index++;
 						Log.d("isID", out);
 						isID = false;
 					}
 					if(isName){
-						String out = "Name: " + new String(ch, begin, length);
+						String out = "Name: " + new String(ch, begin, length) + " ";
+						strArray[index] = out;
+						index++;
 						Log.d("isName", out);
 						isName = false;						
 					}
 					if(isScore){
-						String out = "Score: " + new String(ch, begin, length);
+						String out = "Score: " + new String(ch, begin, length) + " ";
+						strArray[index] = out;
+						index++;
+						strArray[index] = "\n";
+						index++;
 						Log.d("isScore", out);
 						isScore = false;						
 					}
@@ -115,6 +129,12 @@ public class HighScores extends Activity {
 			is.setEncoding("UTF-8");
 			
 			saxParser.parse(is, handle);
+			
+			//set up str
+			for(int i=0; i<12; i++){
+				str += strArray[i];
+			}
+			
 			
 		} // End of try
 		catch(Exception e){
