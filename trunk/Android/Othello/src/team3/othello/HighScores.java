@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class HighScores extends Activity {
-
-	EditText txtData;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
