@@ -19,7 +19,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 	private DrawBoard thread;
 	private char player;	//color of player whose turn it is
 	boolean showNextPos = false;
-	private AI ai = new AI();
+	public static AI ai = new AI();
 	boolean endOfGame = false;
 	
 	Mechanics m;
@@ -32,8 +32,8 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 		player = m.BLACK;
 		
 		//set AI color and difficulty here!!!!!!!!!***********************
-		ai.setPlayerColor(m.WHITE);
-		ai.setDifficulty(m.HARD);
+		//ai.setPlayerColor(m.WHITE);
+		//ai.setDifficulty(m.HARD);
 		//****************************************************************
 		
 		//if ai is black, have him go first now
