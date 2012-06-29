@@ -6,9 +6,14 @@ import android.graphics.*;
 
 public class DrawBoard extends View {
 
+	private static int COLUMNS = 8;
+	private static int ROWS = 8;
 	
-	private float width;
-	private float height;
+	private int width;
+	private int height;
+	private int spaceHeight;
+	private int spaceWidth;
+	
 	private int seleX;
 	private int seleY;
 	private final Rect selRect = new Rect();
@@ -21,8 +26,8 @@ public class DrawBoard extends View {
 	
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh){
-		width = w/8f;
-		height = h/8f;
+		width = w/8;
+		height = h/8;
 		getRect(seleX, seleY, selRect);
 		super.onSizeChanged(w, h, oldw, oldh);
 	}

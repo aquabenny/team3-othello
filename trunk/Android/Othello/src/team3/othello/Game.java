@@ -9,10 +9,19 @@ import android.view.View.OnClickListener;
 import android.graphics.*;
 
 public class Game extends Activity implements OnClickListener {
-
+		
+	//Create this stuff when Activity is started	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		
+		String tag = "IntentDiff: ";
+		String tag2 = "IntentColor: ";
+		//Get Difficulty and player color
+		String aiLevel = getIntent().getStringExtra("Difficulty");
+		String colorChoice = getIntent().getStringExtra("Color");
+		Log.d(tag, aiLevel);
+		Log.d(tag2, colorChoice);
 		
 		View hintButton = findViewById(R.id.hint);
 		hintButton.setOnClickListener(this);
@@ -22,6 +31,8 @@ public class Game extends Activity implements OnClickListener {
 		redoButton.setOnClickListener(this);
 		View quitButton = findViewById(R.id.quit);
 		quitButton.setOnClickListener(this);
+		
+		
 		
 		/*
 		//Setting up game board buttons - Column A
@@ -170,6 +181,7 @@ public class Game extends Activity implements OnClickListener {
 */
 	}
 	
+	//When a button is clicked, pass instructions
 	public void onClick(View v){
 		String buttonHit = "Action: ";
 		String moveMade = "Move: ";
@@ -203,6 +215,7 @@ public class Game extends Activity implements OnClickListener {
 		/*case R.id.a1:
 			//Check if move is valid
 			//Change Piece Color
+			//Redraw board with new move, and AI move 
 			break;
 		case R.id.a2:
 			break;
