@@ -834,7 +834,7 @@ public class Mechanics {//extends Activity {
 		//undo
 		else if(input.equals("UNDO")){
 			if(!undo()){		//undo didn't work
-				return 0;
+				return -1;
 			}
 			if(display){
 				//System.out.println("inside display");
@@ -846,7 +846,7 @@ public class Mechanics {//extends Activity {
 		//redo
 		else if(input.equals("REDO")){
 			if(!redo()){		//redo didn't work
-				return 0;
+				return -1;
 			}
 			if(display){
 				print(states[currState], player);

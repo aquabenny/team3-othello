@@ -25,9 +25,5 @@ public class Alerts extends Activity {
 		else{
 			errorMessage.setText("An Unspecified Error Ocurred. WTF");
 		}
-		
-
-		
-		
 	}
 }
