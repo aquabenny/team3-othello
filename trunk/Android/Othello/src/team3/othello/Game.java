@@ -1,15 +1,22 @@
 package team3.othello;
 
+import team3.mechanicsAI.Mechanics;
 import team3.othello.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.graphics.*;
 
 public class Game extends Activity implements OnClickListener {
-		
+	
+	LinearLayout ll;
+	Draw2d c;
+	Mechanics m;
+	
 	//Create this stuff when Activity is started	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -32,6 +39,23 @@ public class Game extends Activity implements OnClickListener {
 		View quitButton = findViewById(R.id.quit);
 		quitButton.setOnClickListener(this);
 		
+		ll = (LinearLayout) findViewById(R.id.gameBoard);
+		m = new Mechanics();
+		c = new Draw2d(this, m);
+		
+		Draw2d pcc = new Draw2d(this, m);
+		Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(result);
+		pcc.draw(canvas);
+		pcc.setLayoutParams(new LayoutParams(500, 500));
+		ll.addView(pcc);
+		
+		/*
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setColor(Color.BLACK);
+		canvas.drawCircle(100, 100, 25, paint);
+		*/
 		
 		
 		/*
