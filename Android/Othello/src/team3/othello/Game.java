@@ -53,7 +53,12 @@ public class Game extends Activity implements OnClickListener {
 		m = new Mechanics();
 		//c = new Draw2d(this, m);
 		
-		/*Draw2d*/ pcc = new Draw2d(this, m);
+		/*Draw2d*/ try {
+			pcc = new Draw2d(this, m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(result);
 		pcc.draw(canvas);
