@@ -20,7 +20,6 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 	private char player;	//color of player whose turn it is
 	boolean showNextPos = false;
 	public static AI ai = new AI();
-	boolean endOfGame = false;
 	
 	Mechanics m;
 	public Draw2d(Context context, Mechanics m) throws IOException{
@@ -663,15 +662,9 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 				}
 				
 				if(ai.getColor() == player){	//ai should go
-					do{
-						rc = m.parse(ai.go(m), player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}while(rc == 0 && !endOfGame);
+					if(m.parse(ai.go(m), player) == 1){
+						player = m.opposingPlayer(player);
+					}
 				}	
 						
 			} catch (IOException e) {
@@ -727,51 +720,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 					
 				}	
 			}
-		}
-		
-		if(endOfGame){
-			paint.setARGB(190, 255, 255, 255);
-			c.drawRect(10, 160, 230, 325, paint);
 			
-			paint.setColor(Color.RED);
-			paint.setTextSize(25);
-			String out = "";
-			int blackPieces = m.numPieces(m.getState(), m.BLACK);
-			int whitePieces = m.numPieces(m.getState(), m.WHITE);
-			int blackScore = m.score(m.getState(), m.BLACK);
-			int whiteScore = m.score(m.getState(), m.WHITE);
-			
-			if(blackScore == 0){
-				//tie
-				out = "Tie game!\n";
-				c.drawText(out, 20, 200, paint);
-				out = "Black Pieces: " + blackPieces + "\n";
-				c.drawText(out, 20, 230, paint);
-				out = "White Pieces: " + whitePieces + "\n";
-				c.drawText(out, 20, 260, paint);
-			}
-			else if(blackScore > 0){
-				//black wins
-				out = "Black wins!\n";
-				c.drawText(out, 20, 200, paint);
-				out = "Black Pieces: " + blackPieces + "\n";
-				c.drawText(out, 20, 230, paint);
-				out = "White Pieces: " + whitePieces + "\n";
-				c.drawText(out, 20, 260, paint);
-				out = "Score: " + blackScore + "\n";
-				c.drawText(out, 20, 290, paint);
-			}
-			else{
-				//white wins
-				out = "White wins!\n";
-				c.drawText(out, 20, 200, paint);
-				out = "Black Pieces: " + blackPieces + "\n";
-				c.drawText(out, 20, 230, paint);
-				out = "White Pieces: " + whitePieces + "\n";
-				c.drawText(out, 20, 260, paint);
-				out = "Score: " + whiteScore + "\n";
-				c.drawText(out, 20, 290, paint);
-			}
 		}
 	}
 
@@ -789,24 +738,19 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		if(!endOfGame){
-			boolean retry = true;
-			while (retry) {
-				try {
-					thread.join();
-					retry = false;
-				} catch (InterruptedException e) {
-					// try again shutting down the thread
-				}
+		boolean retry = true;
+		while (retry) {
+			try {
+				thread.join();
+				retry = false;
+			} catch (InterruptedException e) {
+				// try again shutting down the thread
 			}
-			//Log.d(TAG, "Thread was shut down cleanly");
 		}
+		//Log.d(TAG, "Thread was shut down cleanly");
 	}
-	
 	private void endGame(){
-		//print scores
-		endOfGame = true;
-		//showNextPos = true;	//workaround to print last board
+		showNextPos = true;	//workaround to print last board
 		thread.setRunning(false);
 	}
 	

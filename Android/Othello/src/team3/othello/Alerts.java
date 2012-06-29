@@ -9,6 +9,8 @@ public class Alerts extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alerts);
+
+		//Alerts for Errors
 		String errorMsg = getIntent().getStringExtra("Error");
 		Log.d("LOL:", errorMsg);
 		TextView errorMessage = (TextView)findViewById(R.id.MSG);
