@@ -65,7 +65,7 @@ public class Mechanics {//extends Activity {
 	private int currState;	
 	
 	//Private functions
-	private char opposingPlayer(char player){
+	public char opposingPlayer(char player){
 		if(player == WHITE){
 			return BLACK;
 		}

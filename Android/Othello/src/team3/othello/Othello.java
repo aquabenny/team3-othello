@@ -1,5 +1,10 @@
 package team3.othello;
 
+/*
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;*/
+
 import team3.othello.R;
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,9 +15,17 @@ import android.view.View.OnClickListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-public class Othello extends Activity implements OnClickListener {
+//import android.graphics.*; //Import standard Android graphics library 
 
+//import team3.othello.AI; //Import AI code for difficulty settings
+
+public class Othello extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */
+    /**
+     * ***************************************************************
+     *                     ANDROID FUNCTIONS
+     * ***************************************************************
+     */
 	@Override // Parts for Android application
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +72,7 @@ public class Othello extends Activity implements OnClickListener {
 			
 			//Start the Game Activity
 			Intent i = new Intent(this, Game.class);
-			i.putExtra("Difficulty", difficulty); //Passes difficulty and color setting to the Game class
+			i.putExtra("Difficulty", difficulty);
 			i.putExtra("Color", colorSelected);
 			startActivity(i);
 			break;
@@ -69,7 +82,7 @@ public class Othello extends Activity implements OnClickListener {
 			String abouts = "About";
 			Intent j = new Intent(this, About.class);
 			startActivity(j);
-			Log.d(tag, abouts); //Debugger testing message
+			Log.d(tag, abouts);
 			break;
 			}
 		case R.id.highScore:{
@@ -77,7 +90,7 @@ public class Othello extends Activity implements OnClickListener {
 			String hs = "View High Scores";
 			Intent k = new Intent(this, HighScores.class);
 			startActivity(k);
-			Log.d(tagger, hs); //Debugger testing message
+			Log.d(tagger, hs);
 			break;
 			}
 		}
