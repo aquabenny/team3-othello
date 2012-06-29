@@ -18,10 +18,11 @@
 	<string name="hint_label">HINT</string>
 	<string name="about_content">This version of Othello has been created by Dylan McDougall, Sam Stewart, and Stephen Ten Eyck. Othello is a game of strategery. </string>
 	<string name="view_button">View High Scores!</string>
+	<string name="score_title">High Scores:</string>
 	<string name="undo_label">UNDO</string>
 	<string name="redo_label">REDO</string>
 	
-	<string name="a1">a1</string>	<string name="a2">a2</string>	<string name="a3">a3</string>
+	<!-- <string name="a1">a1</string>	<string name="a2">a2</string>	<string name="a3">a3</string>
 	<string name="a4">a4</string>	<string name="a5">a5</string>	<string name="a6">a6</string>
 	<string name="a7">a7</string>	<string name="a8">a8</string>
 	<string name="b1">b1</string>	<string name="b2">b2</string>	<string name="b3">b3</string>
@@ -44,6 +45,6 @@
 	<string name="g7">g7</string>	<string name="g8">g8</string>
 	<string name="h1">h1</string>	<string name="h2">h2</string>	<string name="h3">h3</string>
 	<string name="h4">h4</string>	<string name="h5">h5</string>	<string name="h6">h6</string>
-	<string name="h7">h7</string>	<string name="h8">h8</string>
+	<string name="h7">h7</string>	<string name="h8">h8</string> -->
     
 </resources>

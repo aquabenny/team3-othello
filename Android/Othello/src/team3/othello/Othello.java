@@ -72,6 +72,8 @@ public class Othello extends Activity implements OnClickListener {
 			
 			//Start the Game Activity
 			Intent i = new Intent(this, Game.class);
+			i.putExtra("Difficulty", difficulty);
+			i.putExtra("Color", colorSelected);
 			startActivity(i);
 			break;
 			}
@@ -93,23 +95,5 @@ public class Othello extends Activity implements OnClickListener {
 			}
 		}
 	}
-	
-    
-	/**
-     * ***************************************************************
-     *                     GAME USER INTERFACE
-     * ***************************************************************
-     */
-	//make a new radio button
-	//set ActionListener, onClick -> start Activity(this.Othello, GameBoard.java 
-	//buttons for each possible square on the board
-	
-	
-	
-	/**
-     * ***************************************************************
-     *                     HIGH SCORE STORAGE
-     * ***************************************************************
-     */
 	
 }
