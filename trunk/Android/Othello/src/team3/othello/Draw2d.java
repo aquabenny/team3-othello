@@ -30,10 +30,11 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 		setFocusable(true);
 		player = m.BLACK;
 		
-		//set AI color and difficulty here!!!!!!!!!
-		ai.setPlayerColor(m.BLACK);
+		//set AI color and difficulty here!!!!!!!!!***********************
+		ai.setPlayerColor(m.WHITE);
 		ai.setDifficulty(m.HARD);
-			
+		//****************************************************************
+		
 		//if ai is black, have him go first now
 		if(ai.getColor() == player){
 			for(int i=0; i<9999; i++){
