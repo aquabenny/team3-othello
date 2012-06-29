@@ -2,6 +2,7 @@ package team3.othello;
 
 import java.io.IOException;
 
+import team3.mechanicsAI.AI;
 import team3.mechanicsAI.Mechanics;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,17 +17,32 @@ import android.view.View;
 public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 	private static final String TAG = DrawBoard.class.getSimpleName();
 	private DrawBoard thread;
-	private char player;
+	private char player;	//color of player whose turn it is
 	boolean showNextPos = false;
+	private AI ai = new AI();
 	
 	Mechanics m;
-	public Draw2d(Context context, Mechanics m){
+	public Draw2d(Context context, Mechanics m) throws IOException{
 		super(context);
 		this.m = m;
 		getHolder().addCallback(this);
 		thread = new DrawBoard(getHolder(), this);
 		setFocusable(true);
 		player = m.BLACK;
+		
+		//set AI color and difficulty here!!!!!!!!!
+		ai.setPlayerColor(m.BLACK);
+		ai.setDifficulty(m.HARD);
+			
+		//if ai is black, have him go first now
+		if(ai.getColor() == player){
+			for(int i=0; i<9999; i++){
+				;//sleep
+			}
+			if(m.parse(ai.go(m), player) == 1){
+				player = m.opposingPlayer(player);
+			}
+		}	
 	}
 	
 	@Override
@@ -36,605 +52,620 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 			try {
 				showNextPos = false;
 				int rc = 0;
-				if((int)event.getX() >= 5 && (int)event.getX() <= 60){	//column a
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("a1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+				
+				if(ai.getColor() != player){	//human's turn
+					if((int)event.getX() >= 5 && (int)event.getX() <= 60){	//column a
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("a1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("a2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("a3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("a4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("a5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("a6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("a7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("a8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("a2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 65 && (int)event.getX() <= 120){	//column b
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("b1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("b2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("b3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("b4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("b5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("b6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("b7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("b8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("a3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 125 && (int)event.getX() <= 180){	//column c
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("c1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("c2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("c3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("c4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("c5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("c6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("c7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("c8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("a4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 185 && (int)event.getX() <= 240){	//column d
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("d1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("d2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("d3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("d4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("d5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("d6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("d7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("d8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("a5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 245 && (int)event.getX() <= 300){	//column e
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("e1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("e2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("e3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("e4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("e5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("e6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("e7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("e8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("a6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 305 && (int)event.getX() <= 360){	//column f
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("f1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("f2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("f3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("f4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("f5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("f6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("f7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("f8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("a7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 365 && (int)event.getX() <= 420){	//column g
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("g1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("g2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("g3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("g4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("g5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("g6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("g7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("g8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("a8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
+					
+					if((int)event.getX() >= 425 && (int)event.getX() <= 480){	//column h
+						if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
+							rc = m.parse("h1", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
-						else if(rc == 2){
-							endGame();
+						if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
+							rc = m.parse("h2", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
+							rc = m.parse("h3", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
+							rc = m.parse("h4", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
+							rc = m.parse("h5", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
+							rc = m.parse("h6", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
+							rc = m.parse("h7", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
+						}
+						if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
+							rc = m.parse("h8", player);
+							if(rc == 1){
+								player = m.opposingPlayer(player);
+							}
+							else if(rc == 2){
+								endGame();
+							}
 						}
 					}
 				}
 				
-				if((int)event.getX() >= 65 && (int)event.getX() <= 120){	//column b
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("b1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("b2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("b3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("b4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("b5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("b6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("b7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("b8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
+				//sleep
+				for(int i=0; i<9999999; i++){
+					;//nop
 				}
 				
-				if((int)event.getX() >= 125 && (int)event.getX() <= 180){	//column c
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("c1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
+				if(ai.getColor() == player){	//ai should go
+					if(m.parse(ai.go(m), player) == 1){
+						player = m.opposingPlayer(player);
 					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("c2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("c3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("c4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("c5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("c6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("c7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("c8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-				}
-				
-				if((int)event.getX() >= 185 && (int)event.getX() <= 240){	//column d
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("d1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("d2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("d3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("d4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("d5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("d6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("d7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("d8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-				}
-				
-				if((int)event.getX() >= 245 && (int)event.getX() <= 300){	//column e
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("e1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("e2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("e3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("e4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("e5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("e6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("e7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("e8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-				}
-				
-				if((int)event.getX() >= 305 && (int)event.getX() <= 360){	//column f
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("f1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("f2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("f3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("f4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("f5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("f6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("f7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("f8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-				}
-				
-				if((int)event.getX() >= 365 && (int)event.getX() <= 420){	//column g
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("g1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("g2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("g3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("g4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("g5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("g6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("g7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("g8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-				}
-				
-				if((int)event.getX() >= 425 && (int)event.getX() <= 480){	//column h
-					if((int)event.getY() >= 10 && (int)event.getY() <= 65){	//row 1
-						rc = m.parse("h1", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 70 && (int)event.getY() <= 125){	//row 2
-						rc = m.parse("h2", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 130 && (int)event.getY() <= 185){	//row 3
-						rc = m.parse("h3", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 190 && (int)event.getY() <= 245){	//row 4
-						rc = m.parse("h4", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 250 && (int)event.getY() <= 305){	//row 5
-						rc = m.parse("h5", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 310 && (int)event.getY() <= 365){	//row 6
-						rc = m.parse("h6", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 370 && (int)event.getY() <= 425){	//row 7
-						rc = m.parse("h7", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-					if((int)event.getY() >= 430 && (int)event.getY() <= 485){	//row 8
-						rc = m.parse("h8", player);
-						if(rc == 1){
-							player = m.opposingPlayer(player);
-						}
-						else if(rc == 2){
-							endGame();
-						}
-					}
-				}
+				}	
+						
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -690,13 +721,6 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 			}
 			
 		}
-		
-		//c.drawCircle(80, 20, 20, paint);
-		//paint.setColor(Color.RED);
-		//paint.setStyle(Paint.Style.FILL);
-		//paint.setAntiAlias(true);
-		//paint.setTextSize(30);
-		//c.drawText("This shit is pissing me off!", 30, 200, paint);
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -725,6 +749,7 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 		//Log.d(TAG, "Thread was shut down cleanly");
 	}
 	private void endGame(){
+		showNextPos = true;	//workaround to print last board
 		thread.setRunning(false);
 	}
 	
