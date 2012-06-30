@@ -5,6 +5,7 @@ import java.io.IOException;
 import team3.mechanicsAI.AI;
 import team3.mechanicsAI.Mechanics;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,16 +16,17 @@ import android.view.View;
 
 
 public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
-	private static final String TAG = DrawBoard.class.getSimpleName();
+	//private static final String TAG = DrawBoard.class.getSimpleName();
 	private DrawBoard thread;
-	private char player;	//color of player whose turn it is
+	private char player = 'a';	//color of player whose turn it is
 	boolean showNextPos = false;
 	public static AI ai = new AI();
+	Mechanics m = new Mechanics();
+	boolean endOfGame = false;
 	
-	Mechanics m;
-	public Draw2d(Context context, Mechanics m) throws IOException{
+	
+	public Draw2d(Context context) throws IOException{
 		super(context);
-		this.m = m;
 		getHolder().addCallback(this);
 		thread = new DrawBoard(getHolder(), this);
 		setFocusable(true);
@@ -662,9 +664,15 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 				}
 				
 				if(ai.getColor() == player){	//ai should go
-					if(m.parse(ai.go(m), player) == 1){
-						player = m.opposingPlayer(player);
-					}
+					do{
+						rc = m.parse(ai.go(m), player);
+						if(rc == 1){
+							player = m.opposingPlayer(player);
+						}
+						else if(rc == 2){
+							endGame();
+						}
+					}while(rc == 0 && !endOfGame);
 				}	
 						
 			} catch (IOException e) {
@@ -716,12 +724,56 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 							m.getState()[i][j] == m.POSSIBLE_BLACK_OR_WHITE_MOVE)&& player == m.WHITE){
 						paint.setARGB(150, 150, 150, 150);
 						c.drawCircle((float)32.5+i*60, (float)37.5+j*60, 25, paint);
-					}
-					
+					}	
 				}	
 			}
-			
 		}
+		
+		if(endOfGame){
+			paint.setARGB(190, 255, 255, 255);
+			c.drawRect(10, 160, 230, 325, paint);
+			paint.setColor(Color.RED);
+			paint.setTextSize(25);
+			String out = "";
+			int blackPieces = m.numPieces(m.getState(), m.BLACK);
+			int whitePieces = m.numPieces(m.getState(), m.WHITE);
+			int blackScore = m.score(m.getState(), m.BLACK);
+			int whiteScore = m.score(m.getState(), m.WHITE);
+			
+			if(blackScore == 0){
+				//tie
+				out = "Tie game!";
+				c.drawText(out, 20, 200, paint);
+				out = "Black Pieces: " + blackPieces;
+				c.drawText(out, 20, 230, paint);
+				out = "White Pieces: " + whitePieces;
+				c.drawText(out, 20, 260, paint);
+			}
+			else if(blackScore > 0){
+				//black wins
+				out = "Black wins!";
+				c.drawText(out, 20, 200, paint);
+				out = "Black Pieces: " + blackPieces;
+				c.drawText(out, 20, 230, paint);
+				out = "White Pieces: " + whitePieces;
+				c.drawText(out, 20, 260, paint);
+				out = "Score: " + blackScore;
+				c.drawText(out, 20, 290, paint);
+			}
+			else{
+				//white wins
+				out = "White wins!";
+				c.drawText(out, 20, 200, paint);
+				out = "Black Pieces: " + blackPieces;
+				c.drawText(out, 20, 230, paint);
+				out = "White Pieces: " + whitePieces;
+				c.drawText(out, 20, 260, paint);
+				out = "Score: " + whiteScore;
+				c.drawText(out, 20, 290, paint);
+			}
+		}
+		
+		
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -732,25 +784,30 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
+		getHolder().addCallback(this);
+		thread = new DrawBoard(getHolder(), this);
 		thread.setRunning(true);
 		thread.start();
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		boolean retry = true;
-		while (retry) {
-			try {
-				thread.join();
-				retry = false;
-			} catch (InterruptedException e) {
-				// try again shutting down the thread
+		if(!endOfGame){
+			boolean retry = true;
+			while (retry) {
+				try {
+					thread.join();
+					retry = false;
+				} catch (InterruptedException e) {
+					// try again shutting down the thread
+				}
 			}
+			//Log.d(TAG, "Thread was shut down cleanly");
 		}
-		//Log.d(TAG, "Thread was shut down cleanly");
 	}
+	
 	private void endGame(){
-		showNextPos = true;	//workaround to print last board
+		endOfGame = true;
 		thread.setRunning(false);
 	}
 	
