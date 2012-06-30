@@ -19,8 +19,8 @@ public class Game extends Activity implements OnClickListener {
 	
 	LinearLayout ll;
 	//Draw2d c;
-	Mechanics m;
 	Draw2d pcc;
+	Mechanics m = new Mechanics();
 	
 	boolean isError = true;
 	
@@ -71,15 +71,19 @@ public class Game extends Activity implements OnClickListener {
 		m = new Mechanics();
 		//c = new Draw2d(this, m);
 		
-		/*Draw2d*/ try {
-			pcc = new Draw2d(this, m);
+		try {
+			pcc = new Draw2d(this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+
 		Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(result);
-		pcc.draw(canvas);
+		Canvas canvas = new Canvas();
+		canvas.setBitmap(result);
+		//pcc.draw(canvas);
+		ll.draw(canvas);
 		pcc.setLayoutParams(new LayoutParams(500, 500));
 		ll.addView(pcc);
 	}

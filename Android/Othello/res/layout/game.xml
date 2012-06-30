@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/ForestGreen"
     android:orientation="vertical" >
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp" />
 
     <LinearLayout
         android:id="@+id/top_bar"
@@ -31,18 +26,6 @@
             android:text="@string/hint_label" />
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="wrap_content"
-        android:layout_height="31dp" />
 
     <LinearLayout
         android:id="@+id/gameBoard"
@@ -79,10 +62,5 @@
             android:layout_weight="0.17"
             android:text="@string/redo_label" />
     </LinearLayout>
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp" />
 
 </LinearLayout>
