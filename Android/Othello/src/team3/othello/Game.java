@@ -79,11 +79,11 @@ public class Game extends Activity implements OnClickListener {
 		}
 
 
-		Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas();
-		canvas.setBitmap(result);
+		//Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
+		//Canvas canvas = new Canvas();
+		//canvas.setBitmap(result);
 		//pcc.draw(canvas);
-		ll.draw(canvas);
+		//ll.draw(canvas);
 		pcc.setLayoutParams(new LayoutParams(500, 500));
 		ll.addView(pcc);
 	}

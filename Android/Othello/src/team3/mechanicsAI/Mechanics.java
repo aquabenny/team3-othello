@@ -60,6 +60,7 @@ public class Mechanics {//extends Activity {
 	 */
 	//Private members
 	private char states[][][] = new char[MAX_STATES][COLUMNS][ROWS];
+	private char playerTurnArray[] = new char[MAX_STATES];
 	private boolean display;
 	private int numStates;
 	private int currState;	
@@ -222,24 +223,44 @@ public class Mechanics {//extends Activity {
 			System.out.println("Error: invalid player");
 	}
 	
-	private boolean undo(){
-		if(currState <= 1){
+	private boolean undo(char player){
+		if(currState == 0){
 			return false;
 		}
-		else{
-			currState -= 2;
-			return true;
+		int nextState = currState - 1;
+		while(true){
+			if(nextState < 0){
+				return false;
+			}
+			if(playerTurnArray[nextState] == player){
+				currState = nextState;
+				return true;
+			}
+			if(nextState == 0){
+				return false;
+			}
+			nextState--;
 		}
 	}
 	
-	private boolean redo(){
-		if(currState >= numStates-2){
+	private boolean redo(char player){
+		if(currState == numStates-1){
 			System.out.println("redo: Can't redo, no more future states.\n");
 			return false;
 		}
-		else{
-			currState += 2;
-			return true;
+		int nextState = currState + 1;
+		while(true){
+			if(nextState > numStates-1){
+				return false;
+			}
+			if(playerTurnArray[nextState] == player){
+				currState = nextState;
+				return true;
+			}
+			if(nextState == numStates-1){
+				return false;
+			}
+			nextState++;
 		}
 	}
 	
@@ -724,6 +745,8 @@ public class Mechanics {//extends Activity {
 		states[currState][D][3] = WHITE;
 		states[currState][E][4] = WHITE;
 		
+		playerTurnArray[currState] = BLACK;
+		
 		for(int i=0; i < COLUMNS; i++){
 			for(int j=0; j < ROWS; j++){
 				states[currState][i][j] = evalSpace(states[currState], i, j);
@@ -833,7 +856,7 @@ public class Mechanics {//extends Activity {
 		
 		//undo
 		else if(input.equals("UNDO")){
-			if(!undo()){		//undo didn't work
+			if(!undo(player)){		//undo didn't work
 				return -1;
 			}
 			if(display){
@@ -845,7 +868,7 @@ public class Mechanics {//extends Activity {
 		
 		//redo
 		else if(input.equals("REDO")){
-			if(!redo()){		//redo didn't work
+			if(!redo(player)){		//redo didn't work
 				return -1;
 			}
 			if(display){
@@ -902,12 +925,14 @@ public class Mechanics {//extends Activity {
 								if(display){
 									print(states[currState], player);				//print(states[currState]);		change back after debugging
 								}
+								playerTurnArray[currState] = player;
 								return 0;
 							}
 							else{
 								if(display){
 									print(states[currState], opposingPlayer(player));				//print(states[currState]);		change back after debugging
 								}
+								playerTurnArray[currState] = opposingPlayer(player);
 								return 1;
 							}
 						}

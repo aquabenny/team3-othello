@@ -659,9 +659,11 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 				}
 				
 				//sleep
+				/*
 				for(int i=0; i<9999999; i++){
 					;//nop
 				}
+				*/
 				
 				if(ai.getColor() == player){	//ai should go
 					do{
@@ -827,6 +829,9 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 	}
 	
 	public boolean undo() throws IOException{
+		if(endOfGame){
+			return false;
+		}
 		if(m.parse("UNDO", player) == 0){
 			return true;
 		}
@@ -834,6 +839,9 @@ public class Draw2d extends SurfaceView implements SurfaceHolder.Callback{
 	}
 	
 	public boolean redo() throws IOException{
+		if(endOfGame){
+			return false;
+		}
 		if(m.parse("REDO", player) == 0){
 			return true;
 		}
