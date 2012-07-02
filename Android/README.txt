@@ -1,7 +1,7 @@
-Othello Game Mechanics - README
+Othello Android Application - README
 CSCE 315 Team 3
 Dylan McDougall, Same Stewart, Stephen Ten Eyck
-29 JUN 2012
+02 JUL 2012
 *****************************************************
 Files Included:
 
